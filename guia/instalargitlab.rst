@@ -26,7 +26,7 @@ Instalamos el Gitlab.::
 	For a comprehensive list of configuration options please see the Omnibus GitLab readme
 	https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md
 
-Procedemo a a ejecutar la autoconfiguracion de Gitlab.::
+Procedemos a a ejecutar la autoconfiguración de Gitlab.::
 
 	gitlab-ctl reconfigure
 	[...]
@@ -114,7 +114,7 @@ Verificamos todos los puertos que coloca en listen.::
 	tcp6       0      0 :::9094                 :::*                    LISTEN      7046/alertmanager    
 
 
-Verificamos y más que todo para tener un historico de todos los procesos que deben levantar.::
+Verificamos y más que todo para tener un histórico de todos los procesos que deben levantar.::
 
 	# ps -ef | grep git
 	root      4921     1  0 17:09 ?        00:00:00 runsvdir -P /opt/gitlab/service log: ...........................................................................................................................................................................................................................................................................................................................................................................................................

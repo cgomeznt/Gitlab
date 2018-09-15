@@ -1,4 +1,4 @@
-Configuracion Inicial de GitLab Enterprise Edition
+Configuración Inicial de GitLab Enterprise Edition
 ==================================================
 
 Procedemos a ingresar por medio de un navegador a la IP del servidor en donde instalamos GitLab Enterprise Edition, en este caso: http://192.168.0.21
