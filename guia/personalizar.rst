@@ -43,14 +43,18 @@ Los siguientes cambios los vamos hacer todos en "Appearance"
 Cambiar el Header Logo de Navigation bar
 +++++++++++++++++++++++++++++++++++++++++
 
-En "Navigation bar:" seleccionamos el botón "Seleccionar Archivo" y buscamos nuestra imagen, la seleccionamos y salvamos.
+En "Navigation bar:" seleccionamos el botón "Seleccionar Archivo" y buscamos nuestra imagen y la seleccionamos.
 
 
 .. figure:: ../images/11.png
 
 
+Salvamos.
+
 .. figure:: ../images/12.png
 
+
+Observamos que ya tiene la imagen asociada.
 
 .. figure:: ../images/13.png
 
@@ -64,6 +68,50 @@ Cambiar el icono de Favicon
 ++++++++++++++++++++++++++++
 
 
+En "Favicon:" seleccionamos el botón "Seleccionar Archivo" y buscamos nuestra imagen y la seleccionamos.
+
+
+.. figure:: ../images/15.png
+
+
+Salvamos.
+
+.. figure:: ../images/12.png
+
+
+Observamos que ya tiene la imagen asociada.
+
+.. figure:: ../images/16.png
+
+
+Nos desconectamos para ver los cambios.
+
+.. figure:: ../images/17.png
+
+
 Cambiar Logo de Sign in/Sign up pages
 +++++++++++++++++++++++++++++++++++++
+
+
+En "En "Favicon::" seleccionamos el botón "Seleccionar Archivo" y buscamos nuestra imagen y la seleccionamos.
+
+
+.. figure:: ../images/18.png
+
+
+Salvamos.
+
+.. figure:: ../images/12.png
+
+
+Observamos que ya tiene la imagen asociada.
+
+.. figure:: ../images/19.png
+
+
+Nos desconectamos para ver los cambios.
+
+.. figure:: ../images/20.png
+
+
 
