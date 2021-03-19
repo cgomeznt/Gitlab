@@ -90,6 +90,11 @@ Si trabaja con SELinux::
 
 Esto garantizará que el proceso de Docker tenga suficientes permisos para crear los archivos de configuración en los volúmenes montados.
 
+Edita tu tabla de dns local o hosts::
+
+	sudo vi /etc/hosts
+	192.168.1.3     gitlab.example.com
+
 El proceso de inicialización puede tardar bastante. Puede realizar un seguimiento de este proceso con::
 
 	sudo docker logs -f gitlab
