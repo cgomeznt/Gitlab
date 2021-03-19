@@ -52,15 +52,15 @@ Instalar GitLab con Docker Engine
 
 Puede ajustar estos directorios para satisfacer sus necesidades. Una vez que haya configurado la variable GITLAB_HOME, puede ejecutar la imagen::
 
-sudo docker run --detach \
-  --hostname gitlab.example.com \
-  --publish 443:443 --publish 80:80 --publish 22:22 \
-  --name gitlab \
-  --restart always \
-  --volume $GITLAB_HOME/config:/etc/gitlab \
-  --volume $GITLAB_HOME/logs:/var/log/gitlab \
-  --volume $GITLAB_HOME/data:/var/opt/gitlab \
-  gitlab/gitlab-ee:latest
+	sudo docker run --detach \
+	  --hostname gitlab.example.com \
+	  --publish 443:443 --publish 80:80 --publish 22:22 \
+	  --name gitlab \
+	  --restart always \
+	  --volume $GITLAB_HOME/config:/etc/gitlab \
+	  --volume $GITLAB_HOME/logs:/var/log/gitlab \
+	  --volume $GITLAB_HOME/data:/var/opt/gitlab \
+	  gitlab/gitlab-ee:latest
 
 Esto descargará e iniciará un contenedor de GitLab y publicará los puertos necesarios para acceder a SSH, HTTP y HTTPS. Todos los datos de GitLab se almacenarán como subdirectorios de $GITLAB_HOME. El contenedor se reiniciará automáticamente después de reiniciar el sistema.
 
