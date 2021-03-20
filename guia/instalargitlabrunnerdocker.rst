@@ -62,11 +62,11 @@ Opción 2: usar volúmenes de Docker para iniciar el contenedor Runner
 
 En este ejemplo, puede utilizar un contenedor de configuración para montar su volumen de datos personalizado.:
 
-	1.- Create the Docker volume::
+1.- Create the Docker volume::
 
 	docker volume create gitlab-runner-config
 
-	2.- Start the GitLab Runner container using the volume we just created::
+2.- Start the GitLab Runner container using the volume we just created::
 
 	docker run -d --name gitlab-runner --restart always \
 	    -v /var/run/docker.sock:/var/run/docker.sock \
