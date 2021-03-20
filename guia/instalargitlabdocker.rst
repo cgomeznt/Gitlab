@@ -95,10 +95,10 @@ Edita tu tabla de dns local o hosts::
 	sudo vi /etc/hosts
 	192.168.1.3     gitlab.example.com
 
-El proceso de inicialización puede tardar bastante. Puede realizar un seguimiento de este proceso con::
+El proceso de inicialización puede **tardar bastante**. Puede realizar un seguimiento de este proceso con::
 
 	sudo docker logs -f gitlab
 
-Después de iniciar un contenedor, puede visitar gitlab.example.com o la IP de tu Host. Puede pasar un tiempo antes de que el contenedor de Docker comience a responder a las consultas. La primera vez que visite GitLab, se le pedirá que configure la contraseña de administrador. Después de cambiarlo, puede iniciar sesión con el nombre de usuario root y la contraseña que configuró.
+Después de iniciar un contenedor, puede visitar gitlab.example.com o la IP de tu Host. Puede pasar un tiempo antes de que el contenedor de Docker comience a responder a las consultas. La primera vez que visite GitLab, se le pedirá que configure la contraseña de administrador. Después de cambiarlo, puede iniciar sesión con el nombre de usuario **root** y la contraseña que configuró.
 
 
