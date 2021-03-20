@@ -64,7 +64,7 @@ La instrucción FROM especifica la imagen base de Docker, en este caso la imagen
 
 La instrucción COPY copia el archivo index.html en /usr/share/nginx/html en la imagen de Docker. Este es el directorio donde Nginx almacena contenido HTML estático.
 
-No olvidemos hace clic en Commit para guardar los cambios.
+No olvidemos hacer clic en Commit para guardar los cambios.
 
 
 Paso 2: registrar un Runner de GitLab
@@ -110,7 +110,7 @@ Va a crear una clave SSH para el usuario de implementación. GitLab CI/CD luego 
 
 Comencemos por cambiar al usuario de implementación recién creado para quien generará la clave SSH::
 
-	su deployer
+	su - deployer
 
 Se le pedirá la contraseña del deployer para completar el cambio de usuario.
 
@@ -131,9 +131,9 @@ Para autorizar la clave SSH para el usuario deployer, debe agregar la clave púb
 
 ~ es la abreviatura del home Directory del usuario en Linux. El programa cat imprimirá el contenido de un archivo; aquí se usa el operador >> para redirigir la salida de cat y agregarla al archivo allowed_keys.
 
-En este paso, ha creado un par de claves SSH para que la pipeline de CI / CD inicie sesión e implemente la aplicación. A continuación, almacenará la clave privada en GitLab para que sea accesible durante el proceso de pipeline.
+En este paso, ha creado un par de claves SSH para que la pipeline de CI/CD inicie sesión e implemente la aplicación. A continuación, almacenará la clave privada en GitLab para que sea accesible durante el proceso de pipeline.
 
-Paso 5: almacenar la clave privada en una variable GitLab CI / CD
+Paso 5: almacenar la clave privada en una variable GitLab CI/CD
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 Va a almacenar la clave privada SSH en una variable de archivo GitLab CI/CD, de modo que la pipeline pueda hacer uso de la clave para iniciar sesión en el servidor.
@@ -158,49 +158,50 @@ Copie la salida a su portapapeles. Asegúrese de agregar un salto de línea desp
 
 Ahora navegue a Settings > CI/CD > Variables en su proyecto de GitLab y haga clic en Add Variable. Complete el formulario de la siguiente manera:
 
-Clave: ID_RSA
+Key: ID_RSA
 
-Valor: pegue su clave privada SSH desde su portapapeles (incluido un salto de línea al final).
+Value: pegue su clave privada SSH desde su portapapeles (incluido un salto de línea al final).
 
-Tipo: Archivo
+Type: File
 
-Alcance del entorno: Todo (predeterminado)
+Environment Scope: All (default)
 
-Proteger variable: marcada
+Protect variable: Checked
 
-Variable de máscara: sin marcar
+Mask variable: Unchecked
 
 
 Se creará un archivo que contiene la clave privada en el runner para cada trabajo de CI/CD y su ruta se almacenará en la variable de entorno $ID_RSA.
 
 Crea otra variable con la IP de tu servidor. Haga clic en Add Variable y complete el formulario de la siguiente manera:
 
-Clave: SERVER_IP
+Key: SERVER_IP
 
-Valor: your_server_IP
+Value: your_server_IP
 
-Tipo: Variable
+Type: Variable
 
-Alcance del entorno: Todos (predeterminado)
+Environment scope: All (default)
 
-Proteger variable: marcada
+Protect variable: Checked
 
-Variable de máscara: marcada
+Mask variable: Checked
 
 
 Finalmente, cree una variable con el usuario de inicio de sesión. Haga clic en Add Variable y complete el formulario de la siguiente manera:
 
-Clave: SERVER_USER
+Key: SERVER_USER
 
-Valor: desplegador
+Value: deployer
 
-Tipo: Variable
+Type: Variable
 
-Alcance del entorno: Todos (predeterminado)
+Environment scope: All (default)
 
-Proteger variable: marcada
+Protect variable: Checked
 
-Variable de máscara: marcada
+Mask variable: Checked
+
 
 Ahora ha almacenado la clave privada en una variable GitLab CI/CD, que hace que la clave esté disponible durante la ejecución de la pipeline. En el siguiente paso, pasará a configurar la pipeline de CI/CD.
 
