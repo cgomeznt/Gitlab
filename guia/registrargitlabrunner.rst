@@ -10,12 +10,13 @@ Antes de registrar un runner, primero debe tener esta información que se obtien
 
 Obtener el Token::
 
-	Para un runner compartido, haga que un administrador vaya al Área de administración de GitLab y haga clic en Descripción general> Runners
+	Para un runner compartido, haga que un administrador vaya al Área de administración de GitLab y haga clic en Overview -> Runners
 
-	Para un runner de grupo, vaya a Configuración> CI / CD y expanda la sección Runners
+	Para un runner de grupo, vaya a Settings -> CI / CD y expanda la sección Runners
 
-	Para un runner específico del proyecto, vaya a Configuración> CI / CD y expanda la sección Runners
+	Para un runner específico del proyecto, vaya a Settings -> CI / CD y expanda la sección Runners
 
+.. figure:: ../images/Docker/02.png
 
 Docker
 +++++++++++
