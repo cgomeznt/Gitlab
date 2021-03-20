@@ -73,10 +73,10 @@ En este ejemplo, puede utilizar un contenedor de configuración para montar su v
 	    -v gitlab-runner-config:/etc/gitlab-runner \
 	    gitlab/gitlab-runner:latest
 
-Registrar al corredor
+Registrar al Runner
 +++++++++++++++++
 
-El último paso es registrar un nuevo corredor. El GitLab Runner Container no recogerá ningún trabajo hasta que esté registrado.https://docs.gitlab.com/runner/register/index.html#docker
+El último paso es registrar un nuevo Runner. El GitLab-Runner Container no recogerá ningún trabajo hasta que esté registrado. ver más documentación en. https://docs.gitlab.com/runner/register/index.html#docker
 
 Actualizar configuración
 +++++++++++++++++
