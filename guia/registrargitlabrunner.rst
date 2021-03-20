@@ -35,7 +35,7 @@ Si tiene el Gitlab-runner en ejecucion detengalo::
 
 1.- Para registrar un runner usando un contenedor Docker:
 
-Para montajes de volumen del sistema local::
+Para montajes de volumen del sistema local, vamos a utilizar este::
 
 	docker run --rm -it -v /srv/gitlab-runner/config:/etc/gitlab-runner gitlab/gitlab-runner register
 

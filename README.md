@@ -7,5 +7,8 @@
 * [Instalar GitLab Docker images](guia/instalargitlabdocker.rst)
 * [Instalar GitLab-Runner Docker images](guia/instalargitlabrunnerdocker.rst)
 * [Registrando GitLab-Runner](guia/registrargitlabrunner.rst)
+* [Integración continua con GitLab CI/CD](guia/integracioncontinua.rst)
+
+
 
 
