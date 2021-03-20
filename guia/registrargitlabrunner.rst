@@ -71,6 +71,9 @@ Este seria el ejemplo de ejecutar el comando y con la salida de la ejecución::
 		gitlab/gitlab-ce
 		Runner registered successfully. Feel free to start it, but if it's running already the config should be automatically reloaded! 
 
+Si todo fue bien, ya podremos ver en el servidor de Gitlab nuestro registro del Gitlab-runner.
+
+.. figure:: ../images/Docker/03.png
 
 Linux
 +++++
