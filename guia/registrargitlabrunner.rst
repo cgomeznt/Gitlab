@@ -12,7 +12,9 @@ Instalarlo en un servidor separado de donde está instalado GitLab.
 Obtener el Token:
 
 	** Para un runner compartido, haga que un administrador vaya al Área de administración de GitLab y haga clic en Descripción general> Runners
+
 	** Para un runner de grupo, vaya a Configuración> CI / CD y expanda la sección Runners
+
 	** Para un runner específico del proyecto, vaya a Configuración> CI / CD y expanda la sección Runners
 
 
@@ -22,6 +24,11 @@ Docker
 Las instrucciones de esta sección están diseñadas para usarse después de instalar GitLab-Runner en un contenedor de Docker.
 
 Los siguientes pasos describen el lanzamiento de un contenedor gitlab-runner de corta duración para registrar el contenedor que creó durante la instalación. Una vez que finaliza el registro, la configuración resultante se escribe en el volumen de configuración elegido (por ejemplo, /srv/gitlab-runner/config) y el runner la cargará utilizando ese volumen de configuración.
+
+Si tiene el Gitlab-runner en ejecucion detengalo::
+
+	docker ps
+	docker stop gilab-runner
 
 1.- Para registrar un runner usando un contenedor Docker:
 
