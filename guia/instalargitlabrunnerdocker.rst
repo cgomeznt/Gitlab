@@ -47,6 +47,11 @@ Se requiere Docker. Ver la documentación oficial de instalación o en este GitH
 
 Para ejecutar gitlab-runner dentro de un contenedor Docker, debe asegurarse de que la configuración no se pierda cuando se reinicia el contenedor. Para hacer esto, hay dos opciones, que se describen a continuación.
 
+Si tiene el Gitlab-runner en ejecucion detengalo::
+
+	docker ps
+	docker stop gilab-runner
+
 Opción 1: usar montajes de volumen del sistema local para iniciar el contenedor Runner
 ++++++++++++++++
 
