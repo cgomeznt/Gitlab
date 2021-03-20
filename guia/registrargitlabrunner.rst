@@ -44,10 +44,15 @@ Para montajes de volumen de Docker::
 	docker run --rm -it -v gitlab-runner-config:/etc/gitlab-runner gitlab/gitlab-runner:latest register
 
 2.- Ingrese la URL de su instancia de GitLab (también conocida como la URL del coordinador de gitlab-ci).
+
 3.- Ingresa la ficha que obtuviste para registrar al runner.
+
 4.- Ingrese una descripción para el runner. Puede cambiar este valor más adelante en la interfaz de usuario de GitLab.
+
 5.- Ingrese las etiquetas asociadas con el runner, separadas por comas. Puede cambiar este valor más adelante en la interfaz de usuario de GitLab.
+
 6.- Proporcione el ejecutor del runner. Para la mayoría de los casos de uso, ingrese docker.
+
 7.- Si ingresó docker como su ejecutor, se le pedirá que la imagen predeterminada se use para proyectos que no definen una en .gitlab-ci.yml.
 
 Este seria el ejemplo de ejecutar el comando y con la salida de la ejecución::
@@ -85,10 +90,15 @@ Para registrar un runner en Linux:
 	sudo gitlab-runner register
 
 2.- Ingrese la URL de su instancia de GitLab (también conocida como la URL del coordinador de gitlab-ci).
+
 3.- Ingresa la ficha que obtuviste para registrar al runner.
+
 4.- Ingrese una descripción para el runner. Puede cambiar este valor más adelante en la interfaz de usuario de GitLab.
+
 5.- Ingrese las etiquetas asociadas con el runner, separadas por comas. Puede cambiar este valor más adelante en la interfaz de usuario de GitLab.
+
 6.- Proporcione el ejecutor del runner. Para la mayoría de los casos de uso, ingrese docker.
+
 7.- Si ingresó docker como su ejecutor, se le pedirá que la imagen predeterminada se use para proyectos que no definen una en .gitlab-ci.yml
 
 
