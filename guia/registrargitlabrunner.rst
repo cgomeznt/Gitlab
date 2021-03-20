@@ -6,16 +6,15 @@ El registro de un runner es el proceso que vincula al runner con una instancia d
 Requerimientos
 +++++++++++
 
-Antes de registrar un runner, primero debe tener esta información en el servidor en donde tiene el Gitlab:
+Antes de registrar un runner, primero debe tener esta información que se obtiene del servidor en donde tiene el Gitlab:
 
-Instalarlo en un servidor separado de donde está instalado GitLab.
-Obtener el Token:
+Obtener el Token::
 
-	** Para un runner compartido, haga que un administrador vaya al Área de administración de GitLab y haga clic en Descripción general> Runners
+	Para un runner compartido, haga que un administrador vaya al Área de administración de GitLab y haga clic en Descripción general> Runners
 
-	** Para un runner de grupo, vaya a Configuración> CI / CD y expanda la sección Runners
+	Para un runner de grupo, vaya a Configuración> CI / CD y expanda la sección Runners
 
-	** Para un runner específico del proyecto, vaya a Configuración> CI / CD y expanda la sección Runners
+	Para un runner específico del proyecto, vaya a Configuración> CI / CD y expanda la sección Runners
 
 
 Docker
