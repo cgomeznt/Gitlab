@@ -57,6 +57,24 @@ Este ejemplo usa el sistema local para el volumen de configuración que está mo
 	     -v /var/run/docker.sock:/var/run/docker.sock \
 	     gitlab/gitlab-runner:latest
 
+En esta documentación vamos a utilizar este caso, cuando lo ejecutemos veremos que tendremos errores como el siguiente::
+
+	docker logs -f gitlab-runner
+	Runtime platform                                    arch=amd64 os=linux pid=7 revision=2ebc4dc4 version=13.9.0
+	Starting multi-runner from /etc/gitlab-runner/config.toml...  builds=0
+	Running in system-mode.                            
+		                                           
+	Configuration loaded                                builds=0
+	listen_address not defined, metrics & debug endpoints disabled  builds=0
+	[session_server].listen_address not defined, session endpoints disabled  builds=0
+	ERROR: Failed to load config stat /etc/gitlab-runner/config.toml: no such file or directory  builds=0
+	ERROR: Failed to load config stat /etc/gitlab-runner/config.toml: no such file or directory  builds=0
+	ERROR: Failed to load config stat /etc/gitlab-runner/config.toml: no such file or directory  builds=0
+	ERROR: Failed to load config stat /etc/gitlab-runner/config.toml: no such file or directory  builds=0
+	ERROR: Failed to load config stat /etc/gitlab-runner/config.toml: no such file or directory  builds=0
+
+Esto es motivado que debemos registrar primero el Gitlab-runner en nuestro Gitlab. Para esta documentación busca en este GitHub, Registrando Gitlab-unners
+
 Opción 2: usar volúmenes de Docker para iniciar el contenedor Runner
 ++++++++++++++++++++
 
@@ -76,7 +94,8 @@ En este ejemplo, puede utilizar un contenedor de configuración para montar su v
 Registrar al Runner
 +++++++++++++++++
 
-El último paso es registrar un nuevo Runner. El GitLab-Runner Container no recogerá ningún trabajo hasta que esté registrado. ver más documentación en. https://docs.gitlab.com/runner/register/index.html#docker
+El último paso es registrar un nuevo Runner. El GitLab-Runner Container no recogerá ningún trabajo hasta que esté registrado. ver más documentación en. https://docs.gitlab.com/runner/register/index.html#docker.
+Para esta documentación busca en este GitHub, Registrando Gitlab-unners
 
 Actualizar configuración
 +++++++++++++++++

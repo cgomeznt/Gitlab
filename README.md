@@ -6,5 +6,6 @@
 * [Personalizar GitLab Enterprise Edition](guia/personalizar.rst)
 * [Instalar GitLab Docker images](guia/instalargitlabdocker.rst)
 * [Instalar GitLab-Runner Docker images](guia/instalargitlabrunnerdocker.rst)
+* [Registrando GitLab-Runner](guia/registrargitlabrunner.rst)
 
 
