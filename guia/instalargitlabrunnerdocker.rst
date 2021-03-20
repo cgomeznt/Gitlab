@@ -60,7 +60,7 @@ Este ejemplo usa el sistema local para el volumen de configuración que está mo
 Opción 2: usar volúmenes de Docker para iniciar el contenedor Runner
 ++++++++++++++++++++
 
-En este ejemplo, puede utilizar un contenedor de configuración para montar su volumen de datos personalizado.::
+En este ejemplo, puede utilizar un contenedor de configuración para montar su volumen de datos personalizado.:
 
 	1.- Create the Docker volume::
 
