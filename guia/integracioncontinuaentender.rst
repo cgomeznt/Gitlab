@@ -4,7 +4,7 @@ Integración continua con GitLab CI/CD solo para entender
 Paso 1: creación del repositorio de GitLab
 +++++++++++++++++++++++++++++++++++++++++++
 
-Comencemos por crear un proyecto de GitLab y agregarle un archivo HTML. Luego copiará el archivo HTML en una imagen de Nginx Docker, que a su vez implementará en el servidor.
+Comencemos por crear un proyecto de GitLab y agregarle un archivo HTML. Luego copiará el archivo HTML en el el directorio /tmp, y tambien se creara un archivo nuevo de prueba.
 
 Inicie sesión en su instancia de GitLab y haga clic en Nuevo proyecto.
 
@@ -42,25 +42,41 @@ Establezca el nombre del archivo en index.html y agregue el siguiente HTML al cu
 
 Haga clic en Commit para aplicar los cambios y crear el archivo.
 
-Este HTML producirá una página en blanco con un título que muestra Mi sitio web personal cuando se abre en un navegador.
+Paso 2 - Creación de un usuario de implementación
+++++++++++++++++++++++++++++++++++++++++++++++
 
-Los Dockerfiles son recetas utilizadas por Docker para crear imágenes de Docker. Creemos un Dockerfile para copiar el archivo HTML en una imagen Nginx.
+Si no quiere tener comportamientos y errores extraños, cree el usuario de Implementación.
 
-Vuelva a la página de descripción general del proyecto, haga clic en el botón + y seleccione la opción Nuevo archivo.
+Va a crear un usuario dedicado a la tarea de implementación. Posteriormente, configurará la pipeline de CI/CD para iniciar sesión en el servidor con ese usuario.
 
-.. figure:: ../images/CICD/07.png
+En su servidor, cree un nuevo usuario::
 
-Establezca el nombre del archivo en Dockerfile y agregue estas instrucciones al cuerpo del archivo::
+	sudo adduser deployer
 
-	FROM nginx:1.18
-	COPY index.html /usr/share/nginx/html
+Se le guiará a través del proceso de creación de usuarios. Introduzca una contraseña segura y, opcionalmente, cualquier otra información de usuario que desee especificar. Finalmente confirme la creación del usuario con Y.
 
-Aplicamos el Commit.
+Agregue el usuario al grupo de Docker::
 
-.. figure:: ../images/CICD/08.png
+	sudo usermod -aG docker deployer
 
-La instrucción FROM especifica la imagen base de Docker, en este caso la imagen nginx: 1.18. 1.18 es la etiqueta de imagen que representa la versión de Nginx. La etiqueta nginx: latest hace referencia a la última versión de Nginx, pero eso podría interrumpir su aplicación en el futuro, por lo que se recomiendan las versiones fijas.
+Esto permite que el implementador ejecute el comando de la ventana acoplable, que es necesario para realizar la implementación.
 
-La instrucción COPY copia el archivo index.html en /usr/share/nginx/html en la imagen de Docker. Este es el directorio donde Nginx almacena contenido HTML estático.
+Paso 3: registrar un Runner de GitLab
+++++++++++++++++++++
 
-No olvidemos hacer clic en Commit para guardar los cambios.
+Empiece por ver este link que le enseñara como registrar el runner contra el Gitlab:
+
+https://github.com/cgomeznt/Gitlab/blob/master/guia/registrargitlabrunner.rst
+
+Con el
+
+
+
+Paso 4: configuración del archivo .gitlab-ci.yml
+++++++++++++++++++++++++++++++++++++++++
+
+Vas a configurar la pipeline GitLab CI/CD. La pipeline creará una imagen de Docker y la enviará al registro del contenedor. GitLab proporciona un registro de contenedores para cada proyecto. Puede explorar el registro de contenedores yendo a Packages & Registries > Container Registry en su proyecto de GitLab (lea más en la documentación del registro de contenedores de GitLab). El último paso en su pipeline es iniciar sesión en su servidor, extraer la última imagen de Docker, eliminar el contenedor viejo y comience un nuevo contenedor.
+
+Ahora va a crear el archivo .gitlab-ci.yml que contiene la configuración de la pipeline. En GitLab, vaya a la página de descripción general del proyecto, haga clic en el botón + y seleccione New File. Luego, establezca el nombre del archivo en .gitlab-ci.yml.
+
+(Alternativamente, puede clonar el repositorio y realizar todos los cambios siguientes en .gitlab-ci.yml en su máquina local, luego confirmar y enviar al repositorio remoto).
