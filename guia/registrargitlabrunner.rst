@@ -3,6 +3,23 @@ Registrando GitLab-Runner
 
 El registro de un runner es el proceso que vincula al runner con una instancia de GitLab. Importante evitar utilizar root, haga todo con usuario **NO root**
 
+Creación de un usuario de implementación
+++++++++++++++++++++++++++++++++++++++++++++++
+
+Va a crear un usuario dedicado a la tarea de implementación. Posteriormente, configurará la pipeline de CI/CD para iniciar sesión en el servidor con ese usuario.
+
+En su servidor, cree un nuevo usuario::
+
+	sudo adduser deployer
+
+Se le guiará a través del proceso de creación de usuarios. Introduzca una contraseña segura y, opcionalmente, cualquier otra información de usuario que desee especificar. Finalmente confirme la creación del usuario con Y.
+
+Agregue el usuario al grupo de Docker::
+
+	sudo usermod -aG docker deployer
+
+Esto permite que el implementador ejecute el comando de la ventana acoplable, que es necesario para realizar la implementación.
+
 Requerimientos
 +++++++++++
 

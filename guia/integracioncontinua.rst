@@ -88,7 +88,7 @@ https://github.com/cgomeznt/Gitlab/blob/master/guia/registrargitlabrunner.rst
 Paso 3 - Creación de un usuario de implementación
 ++++++++++++++++++++++++++++++++++++++++++++++
 
-Va a crear un usuario dedicado a la tarea de implementación. Posteriormente, configurará la pipeline de CI / CD para iniciar sesión en el servidor con ese usuario.
+Va a crear un usuario dedicado a la tarea de implementación. Posteriormente, configurará la pipeline de CI/CD para iniciar sesión en el servidor con ese usuario.
 
 En su servidor, cree un nuevo usuario::
 
