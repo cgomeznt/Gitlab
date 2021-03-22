@@ -159,13 +159,13 @@ Debemos antes de continuar verificar que el Runner se encuentre activo y asociad
 
 Si todo fue bien, ya podremos ver en el servidor de Gitlab nuestro registro del Gitlab-runner.
 
-.. figure:: ../images/Docker/CICD/12.png
+.. figure:: ../images/CICD/12.png
 
 Pero es importante revisar que el runner este conectado al Gitlab (Pendiente con el archivo hosts en los servidores de Docker), en este caso recuerda que tuve que conectar al gitlab-runner y agregar en el archivo  hosts la ip y DNS del Gitlab, pero la IP que suministra el Docker::
 
 Luego debo verificar en el proyecto que este asociado y conectado el runner, en el menú Settting > CI/CD del proyecto y Runners
 
-.. figure:: ../images/Docker/CICD/13.png
+.. figure:: ../images/CICD/13.png
 
 
 
