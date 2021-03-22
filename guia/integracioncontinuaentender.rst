@@ -203,7 +203,12 @@ El archivo tendrá el siguiente contenido::
 	    - cp -R ./index.html /tmp/
 	    - touch /tmp/prueba.txt
 
-Ahora bien cada vez que ejecutemos un commit el gitlab buscara este archivo y ejecutara secuencialmente sus instrucciones según los stage. Basicamente esto lo que hara es mostrar un echo "write your test here...!!!" en pantalla y en el servidor Docker de Gitlab-runner copiara el index.html y creara un archivo prueba.txt en el directorio /tmp
+
+.. figure:: ../images/CICD/14.png
+
+
+
+Ya estamos listo para hacer Integración continua. Ahora bien cada vez que ejecutemos un commit el gitlab buscara este archivo y ejecutara secuencialmente sus instrucciones según los stage. Basicamente esto lo que hara es mostrar un echo "write your test here...!!!" en pantalla y en el servidor Docker de Gitlab-runner copiara el index.html y creara un archivo prueba.txt en el directorio /tmp
 
 Cuando realice cualquier commit se vera algo como esto, estara en pending mientras ejecuta todo.
 
