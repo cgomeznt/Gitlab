@@ -7,7 +7,8 @@
 * [Instalar GitLab Docker images](guia/instalargitlabdocker.rst)
 * [Instalar GitLab-Runner Docker images](guia/instalargitlabrunnerdocker.rst)
 * [Registrando GitLab-Runner](guia/registrargitlabrunner.rst)
-* [Integración continua con GitLab CI/CD solo para entender](guia/integracioncontinuaentender.rst)
+* [CI/CD primeros pasos con un Runner SHELL](guia/integracioncontinuaentender.rst)
+* [CI/CD primeros pasos con un Runner Docker](guia/integracioncontinuaentenderDocker.rst)
 * [Integración continua con GitLab CI/CD](guia/integracioncontinua.rst)
 
 Recuerda lo importante del Tag en el runner

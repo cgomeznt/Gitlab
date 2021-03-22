@@ -1,6 +1,9 @@
 Integración continua con GitLab CI/CD solo para entender
 ==========
 
+Esto es algo muy pero muy básico es solo para entender e iniciarce en Integración continua con GitLab CI/CD.
+El runner que vamos a crear es con un ejecutor de SHELL.
+
 Requerimientos
 +++++++++++
 
@@ -210,11 +213,11 @@ El archivo tendrá el siguiente contenido::
 
 Ya estamos listo para hacer Integración continua. Ahora bien cada vez que ejecutemos un commit el gitlab buscara este archivo y ejecutara secuencialmente sus instrucciones según los stage. Basicamente esto lo que hara es mostrar un echo "write your test here...!!!" en pantalla y en el servidor Docker de Gitlab-runner copiara el index.html y creara un archivo prueba.txt en el directorio /tmp
 
-Cuando realice cualquier commit se vera algo como esto, estara en pending mientras ejecuta todo.
+Cuando realice cualquier commit se vera algo como esto, estara en pending o running mientras ejecuta todo.
 
 .. figure:: ../images/Docker/05.png
 
-Si no hay errores vera esto
+Si no hay errores, después de un rato vera esto
 
 .. figure:: ../images/Docker/06.png
 
