@@ -203,6 +203,8 @@ Protect variable: Checked
 Mask variable: Checked
 
 
+.. figure:: ../images/CICD/10.png
+
 Ahora ha almacenado la clave privada en una variable GitLab CI/CD, que hace que la clave esté disponible durante la ejecución de la pipeline. En el siguiente paso, pasará a configurar la pipeline de CI/CD.
 
 Paso 6: configuración del archivo .gitlab-ci.yml
@@ -210,7 +212,7 @@ Paso 6: configuración del archivo .gitlab-ci.yml
 
 Vas a configurar la pipeline GitLab CI/CD. La pipeline creará una imagen de Docker y la enviará al registro del contenedor. GitLab proporciona un registro de contenedores para cada proyecto. Puede explorar el registro de contenedores yendo a Packages & Registries > Container Registry en su proyecto de GitLab (lea más en la documentación del registro de contenedores de GitLab). El último paso en su pipeline es iniciar sesión en su servidor, extraer la última imagen de Docker, eliminar el contenedor viejo y comience un nuevo contenedor.
 
-Ahora va a crear el archivo .gitlab-ci.yml que contiene la configuración de la pipeline. En GitLab, vaya a la página de descripción general del proyecto, haga clic en el botón + y seleccione Nuevo archivo. Luego, establezca el nombre del archivo en .gitlab-ci.yml.
+Ahora va a crear el archivo .gitlab-ci.yml que contiene la configuración de la pipeline. En GitLab, vaya a la página de descripción general del proyecto, haga clic en el botón + y seleccione New File. Luego, establezca el nombre del archivo en .gitlab-ci.yml.
 
 (Alternativamente, puede clonar el repositorio y realizar todos los cambios siguientes en .gitlab-ci.yml en su máquina local, luego confirmar y enviar al repositorio remoto).
 
@@ -309,8 +311,9 @@ Después de esto, agregue el trabajo de implementación a su .gitlab-ci.yml::
 	    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 80:80 --name my-app $TAG_COMMIT"
 
 
-Alpine es una distribución de Linux ligera y es suficiente como imagen de Docker aquí. Usted asigna el trabajo a la etapa de implementación. La etiqueta de implementación asegura que el trabajo se ejecutará en los runners que están etiquetados como implementación, como el runner que configuró en el Paso 2.
+Alpine es una distribución de Linux ligera y es suficiente como imagen de Docker aquí. Usted debe asignar el job al deploy stage. El deployment tag debe asegurar que el Job se ejecutará en los runners que están en el Tag como deployment, como el runner que configuró en el Paso 2.
 
+job to the deploy stage
 
 La sección de secuencia de comandos del trabajo de implementación comienza con dos comandos configurativos:
 
@@ -416,6 +419,26 @@ Ahora validará la implementación en varios lugares de GitLab, así como en su 
 
 Cuando se envía un archivo .gitlab-ci.yml al repositorio, GitLab lo detectará automáticamente e iniciará una pipeline de CI / CD. En el momento en que creó el archivo .gitlab-ci.yml, GitLab inició la primera pipeline.
 
-Vaya a CI / CD> Canalizaciones en su proyecto de GitLab para ver el estado de la pipeline. Si los trabajos aún están en ejecución / pendientes, espere hasta que se completen. Verá una pipeline aprobada con dos marcas de verificación verdes, lo que indica que el trabajo de publicación e implementación se ejecutó correctamente.
+Vaya a CI/CD pipeline en su proyecto de GitLab para ver el estado de la pipeline. Si los trabajos aún están en ejecución/pendientes, espere hasta que se completen. Verá una pipeline aprobada con dos marcas de verificación verdes, lo que indica que el trabajo de publicación e implementación se ejecutó correctamente.
+
+
+
+.. figure:: ../images/CICD/11.png
+
+Luego que todos los procesos culminen
+
+.. figure:: ../images/CICD/12.png
+
+Examinemos la pipeline. Haga clic en el botón aprobado en la columna Estado para abrir la página de descripción general de la pipeline. Obtendrá una descripción general de información general como:
+
+* Duración de la ejecución de todo el pipeline.
+
+* Para qué confirmación y bifurcación se ejecutó la pipeline.
+
+* Solicitudes de fusión relacionadas. Si hay una solicitud de fusión abierta para la sucursal a cargo, aparecerá aquí.
+
+* Todos los trabajos ejecutados en esta pipeline, así como su estado.
+
+A continuación, haga clic en el botón de deploy para abrir la página de resultados del trabajo de implementación.
 
 

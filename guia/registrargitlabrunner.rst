@@ -80,6 +80,25 @@ Si todo fue bien, ya podremos ver en el servidor de Gitlab nuestro registro del 
 
 .. figure:: ../images/Docker/03.png
 
+Pero es importante revisar que el runner este conectado al Gitlab (Pendiente con el archivo hosts en los servidores de Docker), en este caso me tuve que conectar al gitlab-runner y agregar en el archivo  hosts la ip y DNS del Gitlab, pero la IP que suministra el Docker::
+
+	docker exec -i -t gitlab-runner /bin/bash
+	cat /etc/hosts
+		127.0.0.1	localhost
+		::1	localhost ip6-localhost ip6-loopback
+		fe00::0	ip6-localnet
+		ff00::0	ip6-mcastprefix
+		ff02::1	ip6-allnodes
+		ff02::2	ip6-allrouters
+		172.17.0.3	415d1f0ca97a
+	echo "172.17.0.2      gitlab.example.com gitlab" >> /etc/hosts
+
+Luego debo verificar en el proyecto que este asociado y conectado el runner, en el menú Settting > CI/CD del proyecto y Runners
+
+.. figure:: ../images/Docker/04.png
+
+
+
 Linux
 +++++
 
@@ -140,4 +159,4 @@ Si está ejecutando el runner en un contenedor de Docker, el comando de registro
 	  --locked="false" \
 	  --access-level="not_protected"
 
-El parámetro --access-level se agregó en GitLab Runner 12.0. Utiliza un parámetro de API de registro introducido en GitLab 11.11. Utilice este parámetro durante el registro para crear un runner protegido. Para un runner protegido, use el parámetro --access-level = "ref_protected". Para un runner desprotegido, use --access-level = "not_protected" en su lugar o deje el valor sin definir. Este valor se puede activar o desactivar más tarde en el menú Configuración> CI / CD del proyecto.
+El parámetro --access-level se agregó en GitLab Runner 12.0. Utiliza un parámetro de API de registro introducido en GitLab 11.11. Utilice este parámetro durante el registro para crear un runner protegido. Para un runner protegido, use el parámetro --access-level = "ref_protected". Para un runner desprotegido, use --access-level = "not_protected" en su lugar o deje el valor sin definir. Este valor se puede activar o desactivar más tarde en el menú Settting > CI/CD del proyecto.
