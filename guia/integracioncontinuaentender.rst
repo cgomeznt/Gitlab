@@ -41,14 +41,7 @@ Inicie sesión en su instancia de GitLab y haga clic en Nuevo proyecto.
 
 .. figure:: ../images/CICD/03.png
 
-
-Creemos el archivo HTML. En la página de descripción general de su proyecto, haga clic en Archivo nuevo.
-
-
-.. figure:: ../images/CICD/04.png
-
-
-IMPORTANTE; le estamos colocando un DNS en Proyect URL, lo que significa que debes tener eso en tu DNS o en el archivo de hosts de el Docker gitlab-runner. En este ejemplo lo vamos a colocar en el archivo de hosts, y la IP sera la que tenga el servidor Docker gitlab::
+IMPORTANTE; le estamos colocando un DNS en Proyect URL, lo que significa que debes tener eso en tu DNS o en el archivo de hosts de el Docker gitlab-runner. En este ejemplo lo vamos a colocar en el archivo hosts, y la IP sera la que tenga el servidor Docker gitlab::
 
 	docker exec -i -t gitlab-runner /bin/bash
 	cat /etc/hosts
@@ -60,6 +53,12 @@ IMPORTANTE; le estamos colocando un DNS en Proyect URL, lo que significa que deb
 		ff02::2	ip6-allrouters
 		172.17.0.3	415d1f0ca97a
 	echo "172.17.0.2      gitlab.example.com gitlab" >> /etc/hosts
+
+
+Creemos el archivo HTML. En la página de descripción general de su proyecto, haga clic en Archivo nuevo.
+
+
+.. figure:: ../images/CICD/04.png
 
 
 Establezca el nombre del archivo en index.html y agregue el siguiente HTML al cuerpo del archivo:
@@ -100,6 +99,26 @@ Empiece por ver este link que le enseñara como registrar el runner contra el Gi
 https://github.com/cgomeznt/Gitlab/blob/master/guia/registrargitlabrunner.rst
 
 Con el usuario de implementación vamos a crear un runner con **Executor del tipo SHELL** y utilizaremos los datos que se obtuvierón en los **Requerimientos**::
+
+Si tiene el Gitlab-runner en ejecucion detengalo::
+
+	docker ps
+	docker stop gitlab-runner
+
+Coloque como respuesta a las preguntas::
+
+		Enter the GitLab instance URL (for example, https://gitlab.com/):
+			http://192.168.1.3
+		Enter the registration token:
+			diwM-bTpiJxqndAtjacd -> este es el Token y lo obtiene de los Requerimientos.
+		Enter a description for the runner:
+			shell runner
+		Enter tags for the runner (comma-separated):
+			shell-demo
+		Enter an executor:
+			shell
+
+Ejecute el siguiente comando y complete las preguntas::
 
 	docker run --rm -it -v /home/srv/gitlab-runner/config:/etc/gitlab-runner gitlab/gitlab-runner register
 
