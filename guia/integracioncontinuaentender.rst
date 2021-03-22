@@ -186,12 +186,23 @@ Si no hay errores vera esto
 
 .. figure:: ../images/Docker/06.png
 
-Ahora para ver las salidas debe hacer esto.
+Ahora para ver las salidas debe hacer esto, hacer click en **passed**
 
 .. figure:: ../images/Docker/07.png
 
 
+Luego hacer click en **Test** y **Deploy** para ver el detalle
+
+
+.. figure:: ../images/Docker/10.png
+
+Este es el detalle de **Test**
+
+
 .. figure:: ../images/Docker/08.png
+
+
+Este es el detalle de **Deploy**
 
 
 .. figure:: ../images/Docker/09.png
