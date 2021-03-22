@@ -27,6 +27,20 @@ Inicie sesión en su instancia de GitLab y haga clic en Nuevo proyecto.
 .. figure:: ../images/CICD/03.png
 
 
+IMPORTANTE; le estamos colocando un DNS en Proyect URL, lo que significa que debes tener eso en tu DNS o en el archivo de hosts de el Docker gitlab-runner. En este ejemplo lo vamos a colocar en el archivo hosts, y la IP sera la que tenga el servidor Docker gitlab::
+
+	docker exec -i -t gitlab-runner /bin/bash
+	cat /etc/hosts
+		127.0.0.1	localhost
+		::1	localhost ip6-localhost ip6-loopback
+		fe00::0	ip6-localnet
+		ff00::0	ip6-mcastprefix
+		ff02::1	ip6-allnodes
+		ff02::2	ip6-allrouters
+		172.17.0.3	415d1f0ca97a
+	echo "172.17.0.2      gitlab.example.com gitlab" >> /etc/hosts
+
+
 Creemos el archivo HTML. En la página de descripción general de su proyecto, haga clic en Archivo nuevo.
 
 
@@ -68,8 +82,25 @@ La instrucción COPY copia el archivo index.html en /usr/share/nginx/html en la 
 
 No olvidemos hacer clic en Commit para guardar los cambios.
 
+Paso 2 - Creación de un usuario de implementación
+++++++++++++++++++++++++++++++++++++++++++++++
 
-Paso 2: registrar un Runner de GitLab
+Va a crear un usuario dedicado a la tarea de implementación. Posteriormente, configurará la pipeline de CI/CD para iniciar sesión en el servidor con ese usuario.
+
+En su servidor, cree un nuevo usuario::
+
+	sudo adduser deployer
+
+Se le guiará a través del proceso de creación de usuarios. Introduzca una contraseña segura y, opcionalmente, cualquier otra información de usuario que desee especificar. Finalmente confirme la creación del usuario con Y.
+
+Agregue el usuario al grupo de Docker::
+
+	sudo usermod -aG docker deployer
+
+Esto permite que el implementador ejecute el comando de la ventana acoplable, que es necesario para realizar la implementación.
+
+
+Paso 3: registrar un Runner de GitLab
 ++++++++++++++++++++
 
 Para realizar un seguimiento de los entornos que tendrán contacto con la clave privada SSH, registrará su servidor como un runner de GitLab.
@@ -86,23 +117,64 @@ Empiece por ver este link que le enseñara como registrar el runner contra el Gi
 
 https://github.com/cgomeznt/Gitlab/blob/master/guia/registrargitlabrunner.rst
 
+Con el usuario de implementación vamos a crear un runner con **Executor del tipo SHELL** y utilizaremos los datos que se obtuvierón en los **Requerimientos**::
 
-Paso 3 - Creación de un usuario de implementación
-++++++++++++++++++++++++++++++++++++++++++++++
+Si tiene el Gitlab-runner en ejecucion detengalo::
 
-Va a crear un usuario dedicado a la tarea de implementación. Posteriormente, configurará la pipeline de CI/CD para iniciar sesión en el servidor con ese usuario.
+	docker ps
+	docker stop gitlab-runner
 
-En su servidor, cree un nuevo usuario::
+Coloque como respuesta a las preguntas::
 
-	sudo adduser deployer
+		Enter the GitLab instance URL (for example, https://gitlab.com/):
+			http://192.168.1.3
+		Enter the registration token:
+			diwM-bTpiJxqndAtjacd -> este es el Token y lo obtiene de los Requerimientos.
+		Enter a description for the runner:
+			Runner para ejecutar un Docker
+		Enter tags for the runner (comma-separated):
+			docker-demo
+		Enter an executor:
+			docker
+		Enter the default Docker image
+			alpine:latest
 
-Se le guiará a través del proceso de creación de usuarios. Introduzca una contraseña segura y, opcionalmente, cualquier otra información de usuario que desee especificar. Finalmente confirme la creación del usuario con Y.
+Ejecute el siguiente comando y complete las preguntas::
 
-Agregue el usuario al grupo de Docker::
+	docker run --rm -it -v /home/srv/gitlab-runner/config:/etc/gitlab-runner gitlab/gitlab-runner register
 
-	sudo usermod -aG docker deployer
+Esta seria la ejecución del comando las salidas y los valores que se escribieron::
 
-Esto permite que el implementador ejecute el comando de la ventana acoplable, que es necesario para realizar la implementación.
+	docker run --rm -it -v /home/srv/gitlab-runner/config:/etc/gitlab-runner gitlab/gitlab-runner register
+		Runtime platform                                    arch=amd64 os=linux pid=7 revision=2ebc4dc4 version=13.9.0
+		Running in system-mode.                            
+				                                   
+		Enter the GitLab instance URL (for example, https://gitlab.com/):
+		http://192.168.1.3
+		Enter the registration token:
+		diwM-bTpiJxqndAtjacd
+		Enter a description for the runner:
+		[6bc13b2a8941]: Runner para ejecutar un Docker
+		Enter tags for the runner (comma-separated):
+		docker-demo
+		Registering runner... succeeded                     runner=diwM-bTp
+		Enter an executor: custom, docker, virtualbox, docker+machine, docker-ssh, parallels, shell, ssh, docker-ssh+machine, kubernetes:
+		docker
+		Enter the default Docker image (for example, ruby:2.6):
+		alpine:latest
+		Runner registered successfully. Feel free to start it, but if it's running already the config should be automatically reloaded! 
+
+
+Importante recordar estos valores, porque deben estar asociados al proyecto al archivo gitlab-ci.yml y el tipo de ejecución::
+
+	Enter tags for the runner
+	Enter an executor
+
+Verificar que Gitlab-runner este en ejecución::
+
+	docker ps
+	docker start gitlab-runner
+
 
 
 Paso 4: configuración de una clave SSH
