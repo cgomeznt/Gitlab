@@ -191,7 +191,7 @@ Luego debo verificar en el proyecto que este asociado y conectado el runner, en 
 .. figure:: ../images/CICD/16.png
 
 
-Paso 4: configuración de una clave SSH
+Paso 5: configuración de una clave SSH
 ++++++++++++++++++++++++++++++++++
 
 Va a crear una clave SSH para el usuario de implementación. GitLab CI/CD luego usará la clave para iniciar sesión en el servidor y realizar la rutina de implementación.
@@ -221,7 +221,7 @@ Para autorizar la clave SSH para el usuario deployer, debe agregar la clave púb
 
 En este paso, ha creado un par de claves SSH para que la pipeline de CI/CD inicie sesión e implemente la aplicación. A continuación, almacenará la clave privada en GitLab para que sea accesible durante el proceso de pipeline.
 
-Paso 5: almacenar la clave privada en una variable GitLab CI/CD
+Paso 6: almacenar la clave privada en una variable GitLab CI/CD
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 Va a almacenar la clave privada SSH en una variable de archivo GitLab CI/CD, de modo que la pipeline pueda hacer uso de la clave para iniciar sesión en el servidor.
@@ -389,7 +389,7 @@ Después de esto, agregue el trabajo de implementación a su .gitlab-ci.yml::
 	  image: alpine:latest
 	  stage: deploy
 	  tags:
-	    - deployment
+	    - docker-demo
 	  script:
 	    - chmod og= $ID_RSA
 	    - apk update && apk add openssh-client
@@ -480,7 +480,7 @@ Su archivo .gitlab-ci.yml completo se verá así::
 	  image: alpine:latest
 	  stage: deploy
 	  tags:
-	    - deployment
+	    - docker-demo
 	  script:
 	    - chmod og= $ID_RSA
 	    - apk update && apk add openssh-client
@@ -490,7 +490,7 @@ Su archivo .gitlab-ci.yml completo se verá así::
 	    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 80:80 --name my-app $TAG_COMMIT"
 	  environment:
 	    name: production
-	    url: http://your_server_IP
+	    url: http://192.168.1.3
 	  only:
 	    - master
 
