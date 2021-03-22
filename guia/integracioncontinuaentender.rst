@@ -186,3 +186,14 @@ Si no hay errores vera esto
 
 .. figure:: ../images/Docker/06.png
 
+Ahora para ver las salidas debe hacer esto.
+
+.. figure:: ../images/Docker/07.png
+
+
+.. figure:: ../images/Docker/08.png
+
+
+.. figure:: ../images/Docker/09.png
+
+
