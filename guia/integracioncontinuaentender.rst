@@ -1,6 +1,24 @@
 Integración continua con GitLab CI/CD solo para entender
 ==========
 
+Requerimientos
++++++++++++
+
+Antes de registrar un runner, primero debe tener esta información que se obtiene del servidor en donde tiene el Gitlab:
+
+Obtener el Token::
+
+	Para un runner compartido, haga que un administrador vaya al Área de administración de GitLab y haga clic en Overview -> Runners
+
+	Para un runner de grupo, vaya a Settings -> CI/CD y expanda la sección Runners
+
+	Para un runner específico del proyecto, vaya a Settings -> CI/CD y expanda la sección Runners
+
+Esta es la imagen para obtener los datos para el runner compartido, que es el que utilizaremos en este documento.
+
+
+.. figure:: ../images/Docker/02.png
+
 Paso 1: creación del repositorio de GitLab
 +++++++++++++++++++++++++++++++++++++++++++
 
@@ -68,7 +86,21 @@ Empiece por ver este link que le enseñara como registrar el runner contra el Gi
 
 https://github.com/cgomeznt/Gitlab/blob/master/guia/registrargitlabrunner.rst
 
-Con el
+Con el usuario de implementación vamos a crear un runner con **Executor del tipo SHELL** y utilizaremos los datos que se obtienen ver **Requerimientos**::
+
+	docker run --rm -it -v /home/srv/gitlab-runner/config:/etc/gitlab-runner gitlab/gitlab-runner register
+		Runtime platform                                    arch=amd64 os=linux pid=7 revision=2ebc4dc4 version=13.9.0
+		Running in system-mode.                            
+				                                   
+		Enter the GitLab instance URL (for example, https://gitlab.com/):
+		http://192.168.1.3
+		Enter the registration token:
+		diwM-bTpiJxqndAtjacd
+		Enter a description for the runner:
+		[ccdef3cbb769]: Runner para hacer el demo de CI/CD en un Shell
+		Enter tags for the runner (comma-separated):
+		shell-demo
+		Registering runner... succeeded  
 
 
 
