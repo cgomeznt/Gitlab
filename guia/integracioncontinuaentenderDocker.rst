@@ -175,6 +175,20 @@ Verificar que Gitlab-runner este en ejecución::
 	docker ps
 	docker start gitlab-runner
 
+Paso 4: Verificar que el Runner este activo.
+++++++++++++++++++++++++++++++++++++++++
+
+Debemos antes de continuar verificar que el Runner se encuentre activo y asociado al proyecto.
+
+Si todo fue bien, ya podremos ver en el servidor de Gitlab nuestro registro del Gitlab-runner.
+
+.. figure:: ../images/CICD/15.png
+
+Pero es importante revisar que el runner este conectado al Gitlab (Pendiente con el archivo hosts en los servidores de Docker), en este caso recuerda que tuve que conectar al gitlab-runner y agregar en el archivo  hosts la ip y DNS del Gitlab, pero la IP que suministra el Docker::
+
+Luego debo verificar en el proyecto que este asociado y conectado el runner, en el menú Settting > CI/CD del proyecto y Runners
+
+.. figure:: ../images/CICD/16.png
 
 
 Paso 4: configuración de una clave SSH
