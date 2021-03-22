@@ -186,12 +186,10 @@ Si no hay errores vera esto
 
 .. figure:: ../images/Docker/06.png
 
-Ahora para ver las salidas debe hacer esto, hacer click en **passed**
+Ahora para ver las salidas debe hacer esto, hacer click en **passed**. Luego hacer click en **Test** y **Deploy** para ver el detalle
 
 .. figure:: ../images/Docker/07.png
 
-
-Luego hacer click en **Test** y **Deploy** para ver el detalle
 
 
 .. figure:: ../images/Docker/10.png
@@ -206,5 +204,21 @@ Este es el detalle de **Deploy**
 
 
 .. figure:: ../images/Docker/09.png
+
+
+Ahora vamos al servidor de Docker gitlab-runner y veamos que se copiara el archivo index.html y se creara un archivo prueba.txt en /tmp::
+
+	docker exec -i -t gitlab-runner /bin/bash
+		root@415d1f0ca97a:/# ls /tmp
+			checksums-amd64  checksums-s390x          gitlab-runner_s390x.deb  install-deps
+			checksums-arm64  gitlab-runner_arm64.deb  index.html               prueba.txt
+		root@415d1f0ca97a:/# cat /tmp/index.html 
+			<html>
+			<body>
+			<h1>My App Website demo de CI/CD</h1>
+			</body>
+			</html>
+		root@415d1f0ca97a:/# 
+
 
 
