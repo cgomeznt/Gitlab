@@ -86,7 +86,11 @@ Empiece por ver este link que le enseñara como registrar el runner contra el Gi
 
 https://github.com/cgomeznt/Gitlab/blob/master/guia/registrargitlabrunner.rst
 
-Con el usuario de implementación vamos a crear un runner con **Executor del tipo SHELL** y utilizaremos los datos que se obtienen ver **Requerimientos**::
+Con el usuario de implementación vamos a crear un runner con **Executor del tipo SHELL** y utilizaremos los datos que se obtuvierón en los **Requerimientos**::
+
+	docker run --rm -it -v /home/srv/gitlab-runner/config:/etc/gitlab-runner gitlab/gitlab-runner register
+
+Esta seria la ejecución del comando las salidas y los valores que se escribieron::
 
 	docker run --rm -it -v /home/srv/gitlab-runner/config:/etc/gitlab-runner gitlab/gitlab-runner register
 		Runtime platform                                    arch=amd64 os=linux pid=7 revision=2ebc4dc4 version=13.9.0
@@ -97,18 +101,88 @@ Con el usuario de implementación vamos a crear un runner con **Executor del tip
 		Enter the registration token:
 		diwM-bTpiJxqndAtjacd
 		Enter a description for the runner:
-		[ccdef3cbb769]: Runner para hacer el demo de CI/CD en un Shell
+		[888fc4078afb]: shell runner
 		Enter tags for the runner (comma-separated):
 		shell-demo
-		Registering runner... succeeded  
+		Registering runner... succeeded                     runner=diwM-bTp
+		Enter an executor: docker, docker-ssh, parallels, ssh, docker+machine, custom, shell, virtualbox, docker-ssh+machine, kubernetes:
+		shell
+		Runner registered successfully. Feel free to start it, but if it's running already the config should be automatically reloaded! 
 
 
+Importante recordar estos valores::
 
-Paso 4: configuración del archivo .gitlab-ci.yml
+	Enter tags for the runner
+	Enter an executor
+
+Paso 4: Verificar que el Runner este activo.
 ++++++++++++++++++++++++++++++++++++++++
 
-Vas a configurar la pipeline GitLab CI/CD. La pipeline creará una imagen de Docker y la enviará al registro del contenedor. GitLab proporciona un registro de contenedores para cada proyecto. Puede explorar el registro de contenedores yendo a Packages & Registries > Container Registry en su proyecto de GitLab (lea más en la documentación del registro de contenedores de GitLab). El último paso en su pipeline es iniciar sesión en su servidor, extraer la última imagen de Docker, eliminar el contenedor viejo y comience un nuevo contenedor.
+Debemos antes de continuar verificar que el Runner se encuentre activo y asociado al proyecto.
+
+Si todo fue bien, ya podremos ver en el servidor de Gitlab nuestro registro del Gitlab-runner.
+
+.. figure:: ../images/Docker/03.png
+
+Pero es importante revisar que el runner este conectado al Gitlab (Pendiente con el archivo hosts en los servidores de Docker), en este caso me tuve que conectar al gitlab-runner y agregar en el archivo  hosts la ip y DNS del Gitlab, pero la IP que suministra el Docker::
+
+	docker exec -i -t gitlab-runner /bin/bash
+	cat /etc/hosts
+		127.0.0.1	localhost
+		::1	localhost ip6-localhost ip6-loopback
+		fe00::0	ip6-localnet
+		ff00::0	ip6-mcastprefix
+		ff02::1	ip6-allnodes
+		ff02::2	ip6-allrouters
+		172.17.0.3	415d1f0ca97a
+	echo "172.17.0.2      gitlab.example.com gitlab" >> /etc/hosts
+
+Luego debo verificar en el proyecto que este asociado y conectado el runner, en el menú Settting > CI/CD del proyecto y Runners
+
+.. figure:: ../images/Docker/04.png
+
+
+Paso 5: configuración del archivo .gitlab-ci.yml
+++++++++++++++++++++++++++++++++++++++++
+
+Vas a configurar la pipeline GitLab CI/CD. 
 
 Ahora va a crear el archivo .gitlab-ci.yml que contiene la configuración de la pipeline. En GitLab, vaya a la página de descripción general del proyecto, haga clic en el botón + y seleccione New File. Luego, establezca el nombre del archivo en .gitlab-ci.yml.
 
 (Alternativamente, puede clonar el repositorio y realizar todos los cambios siguientes en .gitlab-ci.yml en su máquina local, luego confirmar y enviar al repositorio remoto).
+
+El archivo tendrá el siguiente contenido::
+
+	stages:
+	  - test
+	  - deploy
+
+	Test:
+	  stage: test
+	  tags:
+	  - shell-demo
+	  script:
+	    - echo "write your test here...!!!"
+	    - test -f "index.html"
+
+	Deploy:
+	  only:
+	    refs:
+	      - master
+	  stage: deploy
+	  tags:
+	    - shell-demo
+	  script:
+	    - cp -R ./index.html /tmp/
+	    - touch /tmp/prueba.txt
+
+Ahora bien cada vez que ejecutemos un commit el gitlab buscara este archivo y ejecutara secuencialmente sus instrucciones según los stage. Basicamente esto lo que hara es mostrar un echo "write your test here...!!!" en pantalla y en el servidor Docker de Gitlab-runner copiara el index.html y creara un archivo prueba.txt en el directorio /tmp
+
+Cuando realice cualquier commit se vera algo como esto, estara en pending mientras ejecuta todo.
+
+.. figure:: ../images/Docker/05.png
+
+Si no hay errores vera esto
+
+.. figure:: ../images/Docker/06.png
+
