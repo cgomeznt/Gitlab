@@ -1,7 +1,7 @@
 Registrando GitLab-Runner
 ============
 
-El registro de un runner es el proceso que vincula al runner con una instancia de GitLab.
+El registro de un runner es el proceso que vincula al runner con una instancia de GitLab. Importante evitar utilizar root, haga todo con usuario **NO root**
 
 Requerimientos
 +++++++++++
@@ -75,6 +75,10 @@ Este seria el ejemplo de ejecutar el comando y con la salida de la ejecución::
 		Enter the default Docker image (for example, ruby:2.6):
 		gitlab/gitlab-ce
 		Runner registered successfully. Feel free to start it, but if it's running already the config should be automatically reloaded! 
+
+
+**NOTA**: El Runner-Tag es bien importante..!!! porque en el archivo gitlab-ci.yml con el parametro tab: es donde se le indica que runner debe utilizar. Tambien el Executor es sumamente importante..!!!, porque dependiendo de esto el archivo gitlab-ci.yml tendra una configuración en especifico y asociada.
+
 
 Si todo fue bien, ya podremos ver en el servidor de Gitlab nuestro registro del Gitlab-runner.
 

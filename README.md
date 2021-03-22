@@ -10,6 +10,7 @@
 * [Integración continua con GitLab CI/CD](guia/integracioncontinua.rst)
 
 Recuerda lo importante del Tag en el runner
+Recuerda lo importante del Executor en el runner
 Recuerda lo importante de indicarle al runner cual es su executor (Shell, Docker, SSH, etc, etc)
 Verificar que el runner este operativo y eso se hace con le usuario 
 Verificar que el runner este asociado y activo para el proyecto
