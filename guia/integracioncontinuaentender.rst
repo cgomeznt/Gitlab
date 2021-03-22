@@ -112,7 +112,7 @@ Coloque como respuesta a las preguntas::
 		Enter the registration token:
 			diwM-bTpiJxqndAtjacd -> este es el Token y lo obtiene de los Requerimientos.
 		Enter a description for the runner:
-			shell runner
+			Runner para ejecutar un Shell
 		Enter tags for the runner (comma-separated):
 			shell-demo
 		Enter an executor:
@@ -146,6 +146,11 @@ Importante recordar estos valores::
 
 	Enter tags for the runner
 	Enter an executor
+
+Verificar que Gitlab-runner este en ejecución::
+
+	docker ps
+	docker start gitlab-runner
 
 Paso 4: Verificar que el Runner este activo.
 ++++++++++++++++++++++++++++++++++++++++
