@@ -48,6 +48,19 @@ Creemos el archivo HTML. En la página de descripción general de su proyecto, h
 .. figure:: ../images/CICD/04.png
 
 
+IMPORTANTE; le estamos colocando un DNS en Proyect URL, lo que significa que debes tener eso en tu DNS o en el archivo de hosts de el Docker gitlab-runner. En este ejemplo lo vamos a colocar en el archivo de hosts, y la IP sera la que tenga el servidor Docker gitlab::
+
+	docker exec -i -t gitlab-runner /bin/bash
+	cat /etc/hosts
+		127.0.0.1	localhost
+		::1	localhost ip6-localhost ip6-loopback
+		fe00::0	ip6-localnet
+		ff00::0	ip6-mcastprefix
+		ff02::1	ip6-allnodes
+		ff02::2	ip6-allrouters
+		172.17.0.3	415d1f0ca97a
+	echo "172.17.0.2      gitlab.example.com gitlab" >> /etc/hosts
+
 
 Establezca el nombre del archivo en index.html y agregue el siguiente HTML al cuerpo del archivo:
 
@@ -220,5 +233,7 @@ Ahora vamos al servidor de Docker gitlab-runner y veamos que se copiara el archi
 			</html>
 		root@415d1f0ca97a:/# 
 
+
+Listo...!!! esto es un demo muy simple de Integración Continua and Deploy.
 
 
