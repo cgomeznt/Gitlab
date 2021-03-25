@@ -94,6 +94,9 @@ Agregue el usuario al grupo de Docker::
 
 Esto permite que el implementador ejecute el comando de la ventana acoplable, que es necesario para realizar la implementación.
 
+Instalar GitLab-Runner Docker images
++++++++++++++++++++++++++++++++++++++++
+
 Paso 3: registrar un Runner de GitLab
 ++++++++++++++++++++
 

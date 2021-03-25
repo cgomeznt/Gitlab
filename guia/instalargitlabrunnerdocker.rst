@@ -48,13 +48,22 @@ Se requiere Docker. Ver la documentación oficial de instalación o en este GitH
 Para ejecutar gitlab-runner dentro de un contenedor Docker, debe asegurarse de que la configuración no se pierda cuando se reinicia el contenedor. Para hacer esto, hay dos opciones, que se describen a continuación.
 
 
+Configurar la ubicación de los volúmenes
+++++++++++++++++++++++++++++++++++++++++++
+
+Antes de configurar todo lo demás, configure una nueva variable de entorno $GITLAB_HOME que apunte al directorio donde residirán la configuración, los registros y los archivos de datos. Asegúrese de que el directorio exista y de que se haya concedido el permiso adecuado y tenga suficiente espacio.
+
+Para usuarios Linux, configurar la ruta /srv/gitlab::
+
+	export GITLAB_HOME=/srv/gitlab-runner
+
 Opción 1: usar montajes de volumen del sistema local para iniciar el contenedor Runner
 ++++++++++++++++
 
 Este ejemplo usa el sistema local para el volumen de configuración que está montado en el contenedor gitlab-runner. Este volumen se usa para configuraciones y otros recursos.::
 
 	   docker run -d --name gitlab-runner --restart always \
-	     -v /srv/gitlab-runner/config:/etc/gitlab-runner \
+	     -v $GITLAB_HOME/config:/etc/gitlab-runner \
 	     -v /var/run/docker.sock:/var/run/docker.sock \
 	     gitlab/gitlab-runner:latest
 
@@ -74,7 +83,7 @@ En esta documentación vamos a utilizar este caso, cuando lo ejecutemos veremos 
 	ERROR: Failed to load config stat /etc/gitlab-runner/config.toml: no such file or directory  builds=0
 	ERROR: Failed to load config stat /etc/gitlab-runner/config.toml: no such file or directory  builds=0
 
-Esto es motivado que debemos registrar primero el Gitlab-runner en nuestro Gitlab. Para esta documentación busca en este GitHub, Registrando Gitlab-unners
+Esto es motivado que debemos registrar primero el Gitlab-runner en nuestro Gitlab. Para esta documentación busca en este GitHub, Registrando Gitlab-Runners
 
 Opción 2: usar volúmenes de Docker para iniciar el contenedor Runner
 ++++++++++++++++++++

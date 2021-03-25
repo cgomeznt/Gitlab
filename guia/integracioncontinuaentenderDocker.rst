@@ -37,8 +37,38 @@ IMPORTANTE; le estamos colocando un DNS en Proyect URL, lo que significa que deb
 		ff00::0	ip6-mcastprefix
 		ff02::1	ip6-allnodes
 		ff02::2	ip6-allrouters
-		172.17.0.3	415d1f0ca97a
-	echo "172.17.0.2      gitlab.example.com gitlab" >> /etc/hosts
+		172.17.0.2	415d1f0ca97a
+		echo "172.17.0.3      gitlab.example.com gitlab" >> /etc/hosts
+
+Importante como las imagenes que se van a generar no tinen el DNS configurado, agregamos unos DNS y le damos unos extra host que vendrian siendo como el archivo de HOSTS, se debe agregar esta linea, en el segmento de [runners.docker], en el archivo /home/srv/gitlab-runner/config/config.tom del gitlab-runner::
+
+	dns = ["192.168.1.1","8.8.8.8"
+	extra_hosts = ["gitlab.example.com:172.17.0.3"]
+
+Asi quedaria, claro debe buscar cual es el Runner que va llamar, el cat se ejecuta en este caso desde el HOST Debian::
+
+	cat /home/srv/gitlab-runner/config/config.tom
+		[[runners]]
+		  name = "My runner Docker"
+		  url = "http://192.168.1.3"
+		  token = "22dyykXPFzQ7qFL2z8kh"
+		  executor = "docker"
+		  [runners.custom_build_dir]
+		  [runners.cache]
+		    [runners.cache.s3]
+		    [runners.cache.gcs]
+		    [runners.cache.azure]
+		  [runners.docker]
+		    tls_verify = false
+		    image = "alpine:latest"
+		    privileged = false
+		    disable_entrypoint_overwrite = false
+		    oom_kill_disable = false
+		    disable_cache = false
+		    volumes = ["/cache"]
+		    shm_size = 0
+		    dns = ["192.168.1.1","8.8.8.8"]
+		    extra_hosts = ["gitlab.example.com:172.17.0.3"]
 
 
 Creemos el archivo HTML. En la página de descripción general de su proyecto, haga clic en Archivo nuevo.
@@ -139,9 +169,20 @@ Coloque como respuesta a las preguntas::
 		Enter the default Docker image
 			alpine:latest
 
-Ejecute el siguiente comando y complete las preguntas::
+Ejecute el siguiente comando y complete las preguntas con este me generaba error::
 
 	docker run --rm -it -v /home/srv/gitlab-runner/config:/etc/gitlab-runner gitlab/gitlab-runner register
+
+Ejecute este otro y paso pero borre el contenedor existente y genere uno nuevo::
+
+	docker run -d --name gitlab-runner --restart always \
+	  -v /srv/gitlab-runner/config:/etc/gitlab-runner \
+	  -v /var/run/docker.sock:/var/run/docker.sock \
+	  gitlab/gitlab-runner:latest
+
+Cuidado tambien edite el archvio en el /home/srv/gitlab-runner/config/config.toml
+
+	I worked around this issue with volumes = ["/var/run/docker.sock:/var/run/docker.sock", "/cache"]
 
 Esta seria la ejecución del comando las salidas y los valores que se escribieron::
 
@@ -470,6 +511,8 @@ Su archivo .gitlab-ci.yml completo se verá así::
 	  stage: publish
 	  services:
 	    - docker:dind
+	  tags:
+	    - docker-demo
 	  script:
 	    - docker build -t $TAG_COMMIT -t $TAG_LATEST .
 	    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
@@ -494,6 +537,7 @@ Su archivo .gitlab-ci.yml completo se verá así::
 	  only:
 	    - master
 
+
 Finalmente, haga clic en Commit para guardar cambios del archivo .gitlab-ci.yml. Alternativamente, cuando haya clonado el repositorio de Git localmente, confirme y envíe el archivo al control remoto.
 
 Ha creado una configuración de GitLab CI/CD para crear una imagen de Docker e implementarla en su servidor. En el siguiente paso, valida la implementación.
@@ -508,7 +552,6 @@ Ahora validará la implementación en varios lugares de GitLab, así como en su 
 Cuando se envía un archivo .gitlab-ci.yml al repositorio, GitLab lo detectará automáticamente e iniciará una pipeline de CI / CD. En el momento en que creó el archivo .gitlab-ci.yml, GitLab inició la primera pipeline.
 
 Vaya a CI/CD pipeline en su proyecto de GitLab para ver el estado de la pipeline. Si los trabajos aún están en ejecución/pendientes, espere hasta que se completen. Verá una pipeline aprobada con dos marcas de verificación verdes, lo que indica que el trabajo de publicación e implementación se ejecutó correctamente.
-
 
 
 .. figure:: ../images/CICD/11.png

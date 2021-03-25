@@ -90,7 +90,7 @@ Este seria el ejemplo de ejecutar el comando y con la salida de la ejecución::
 		Enter an executor: ssh, virtualbox, docker+machine, docker-ssh+machine, custom, docker, parallels, shell, kubernetes, docker-ssh:
 		docker
 		Enter the default Docker image (for example, ruby:2.6):
-		gitlab/gitlab-ce
+		centos:latest
 		Runner registered successfully. Feel free to start it, but if it's running already the config should be automatically reloaded! 
 
 
