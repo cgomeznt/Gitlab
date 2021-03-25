@@ -3,11 +3,44 @@ Instalar GitLab Enterprise Edition
 
 https://docs.gitlab.com/omnibus/README.html#installation-and-configuration-using-omnibus-package
 
-Instalamos este pre requisito en Centos 7.::
+https://about.gitlab.com/install/#centos-7
 
-	# yum install policycoreutils-python.x86_64
+1. Instale y configure las dependencias necesarias Centos 7.
+++++++++++++++++++++++++
+::
 
-Descargamos el Gitlab puede tambien ir a la pagina y buscar la versión que usted necesita.::
+	sudo yum install -y curl policycoreutils-python openssh-server perl
+	sudo systemctl enable sshd
+	sudo systemctl start sshd
+	sudo firewall-cmd --permanent --add-service=http
+	sudo firewall-cmd --permanent --add-service=https
+	sudo systemctl reload firewalld
+
+A continuación, instale Postfix para enviar correos electrónicos de notificación. Si desea utilizar otra solución para enviar correos electrónicos, omita este paso y configure un servidor SMTP externo después de que se haya instalado GitLab.::
+
+	sudo yum install postfix
+	sudo systemctl enable postfix
+	sudo systemctl start postfix
+
+Durante la instalación de Postfix, puede aparecer una pantalla de configuración. Seleccione 'Sitio de Internet' y presione Intro. Use el DNS externo de su servidor para 'nombre de correo' y presione enter. Si aparecen pantallas adicionales, continúe presionando enter para aceptar los valores predeterminados.
+
+2. Agregue el repositorio de paquetes de GitLab e instale el paquete.
+++++++++++++++++++++
+
+Agregue el repositorio de paquetes de GitLab.::
+
+	curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.rpm.sh | sudo bash
+
+A continuación, instale el paquete GitLab. Asegúrese de haber configurado correctamente su DNS y cambie https://gitlab.example.com a la URL en la que desea acceder a su instancia de GitLab. La instalación configurará e iniciará GitLab automáticamente en esa URL.
+
+Para https://URL, GitLab solicitará automáticamente un certificado con Let's Encrypt, que requiere acceso HTTP entrante y un nombre de host válido. También puede usar su propio certificado o simplemente usar http://.::
+
+	sudo EXTERNAL_URL="https://gitlab.example.com" yum install -y gitlab-ee
+
+Configuración manual
++++++++++++++++++
+
+Descargamos el Gitlab puede también ir a la pagina y buscar la versión que usted necesita.::
 
 	# wget https://packages.gitlab.com/gitlab/gitlab-ee/packages/el/7/gitlab-ee-11.2.3-ee.0.el7.x86_64.rpm
 
@@ -19,7 +52,7 @@ Instalamos el Gitlab.::
 	Thank you for installing GitLab!
 	GitLab was unable to detect a valid hostname for your instance.
 	Please configure a URL for your GitLab instance by setting `external_url`
-	configuration in /etc/gitlab/gitlab.rb file.
+	configuration in /etc/gitlab/gitlab.rb file.conexccr01.credicard.com.ve
 	Then, you can start your GitLab instance by running the following command:
 	  sudo gitlab-ctl reconfigure
 
