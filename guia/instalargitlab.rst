@@ -29,24 +29,26 @@ Durante la instalación de Postfix, puede aparecer una pantalla de configuració
 
 Agregue el repositorio de paquetes de GitLab.::
 
-	curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.rpm.sh | sudo bash
+	curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
 
 A continuación, instale el paquete GitLab. Asegúrese de haber configurado correctamente su DNS y cambie https://gitlab.example.com a la URL en la que desea acceder a su instancia de GitLab. La instalación configurará e iniciará GitLab automáticamente en esa URL.
 
 Para https://URL, GitLab solicitará automáticamente un certificado con Let's Encrypt, que requiere acceso HTTP entrante y un nombre de host válido. También puede usar su propio certificado o simplemente usar http://.::
 
-	sudo EXTERNAL_URL="https://gitlab.example.com" yum install -y gitlab-ee
+	sudo EXTERNAL_URL="https://gitlab.example.com" yum install -y gitlab-ce
 
-Configuración manual
+3. Instalación y Configuración manual
 +++++++++++++++++
 
 Descargamos el Gitlab puede también ir a la pagina y buscar la versión que usted necesita.::
 
-	# wget https://packages.gitlab.com/gitlab/gitlab-ee/packages/el/7/gitlab-ee-11.2.3-ee.0.el7.x86_64.rpm
+	# wget https://packages.gitlab.com/gitlab/gitlab-ee/packages/el/7/gitlab-ce-11.2.3-ce.0.el7.x86_64.rpm
 
 Instalamos el Gitlab.::
 
-	# EXTERNAL_URL="www.dominio.local" # rpm -ivh gitlab-ee-11.2.3-ee.0.el7.x86_64.rpm
+	# EXTERNAL_URL="www.dominio.local" 
+	
+	# rpm -ivh gitlab-ee-11.2.3-ce.0.el7.x86_64.rpm
 
 	[...]
 	Thank you for installing GitLab!
