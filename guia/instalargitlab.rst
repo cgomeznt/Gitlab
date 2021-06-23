@@ -46,9 +46,9 @@ Descargamos el Gitlab puede también ir a la pagina y buscar la versión que ust
 
 Instalamos el Gitlab.::
 
-	# EXTERNAL_URL="www.dominio.local" 
+	# EXTERNAL_URL="http://gitlab.example.com" 
 	
-	# rpm -ivh gitlab-ee-11.2.3-ce.0.el7.x86_64.rpm
+	# rpm -ivh gitlab-ce-11.2.3-ce.0.el7.x86_64.rpm
 
 	[...]
 	Thank you for installing GitLab!

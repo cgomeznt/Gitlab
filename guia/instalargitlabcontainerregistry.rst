@@ -69,6 +69,7 @@ hello-world            latest    d1165f221234   2 weeks ago    13.3kB
 registry               2         5c4008a25e05   4 weeks ago    26.2MB
 alpine                 latest    28f6e2705743   5 weeks ago    5.61MB
 centos                 latest    300e315adb2f   3 months ago   209MB
+
 root@debian:~# docker tag centos:latest localhost:5000/my-centos
 root@debian:~# docker push localhost:5000/my-centos
 Using default tag: latest
@@ -99,6 +100,7 @@ hello-world            latest    d1165f221234   2 weeks ago    13.3kB
 registry               2         5c4008a25e05   4 weeks ago    26.2MB
 alpine                 latest    28f6e2705743   5 weeks ago    5.61MB
 centos                 latest    300e315adb2f   3 months ago   209MB
+
 root@debian:~# curl -X GET https://localhost:5000/v2/_catalog
 curl: (35) error:1408F10B:SSL routines:ssl3_get_record:wrong version number
 root@debian:~# curl -X GET http://localhost:5000/v2/_catalog

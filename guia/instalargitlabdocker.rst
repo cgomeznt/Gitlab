@@ -90,15 +90,42 @@ Si trabaja con SELinux::
 
 Esto garantizará que el proceso de Docker tenga suficientes permisos para crear los archivos de configuración en los volúmenes montados.
 
-Edita tu tabla de dns local o hosts de tu servidor y agrega la IP del servidor que contiener el Docker Gitlab (En este laboratorio es la ip de la maquina Debian)::
-
-	sudo vi /etc/hosts
-	192.168.1.3     gitlab.example.com
 
 El proceso de inicialización puede **tardar bastante**. Puede realizar un seguimiento de este proceso con::
 
 	sudo docker logs -f gitlab
 
-Después de iniciar un contenedor, puede visitar gitlab.example.com o la IP del Host. Puede pasar un tiempo antes de que el contenedor de Docker comience a responder a las consultas. La primera vez que visite GitLab, se le pedirá que configure la contraseña de administrador. Después de cambiarlo, puede iniciar sesión con el nombre de usuario **root** y la contraseña que configuró.
+
+
+Instalar GitLab usando Docker Compose
++++++++++++++++++++++++++++++++++++++
+
+Con Docker Compose, puede configurar, instalar y actualizar fácilmente su instalación de GitLab basada en Docker:
+
+Instale Docker Compose.
+Cree un archivo docker-compose.yml (o descargue un ejemplo)::
+
+	web:
+	  image: 'gitlab/gitlab-ee:latest'
+	  restart: always
+	  hostname: 'gitlab.example.com'
+	  environment:
+	    GITLAB_OMNIBUS_CONFIG: |
+	      external_url 'https://gitlab.example.com'
+	      # Add any other gitlab.rb configuration here, each on its own line
+	  ports:
+	    - '80:80'
+	    - '443:443'
+	    - '22:22'
+	  volumes:
+	    - '$GITLAB_HOME/config:/etc/gitlab'
+	    - '$GITLAB_HOME/logs:/var/log/gitlab'
+	    - '$GITLAB_HOME/data:/var/opt/gitlab'
+
+Asegúrese de estar en el mismo directorio que docker-compose.yml e inicie GitLab::
+
+	docker-compose up -d
+
+
 
 
