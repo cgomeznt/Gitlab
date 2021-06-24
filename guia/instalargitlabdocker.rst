@@ -126,6 +126,11 @@ Asegúrese de estar en el mismo directorio que docker-compose.yml e inicie GitLa
 
 	docker-compose up -d
 
+Para cambiar el password ::
+
+	$ docker exec -ti laboratorio_web_1 bash
+	root@gitlab:/# gitlab-rake "gitlab:password:reset"
+
 
 
 
