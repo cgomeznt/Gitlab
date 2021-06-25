@@ -28,17 +28,28 @@ docker run --detach \
 ==========================================
 
 docker run -dti \
---hostname gitlab.example.com \
+--hostname gitlab.dominio.local \
 --publish 443:443 \
 --publish 80:80 \
 --publish 22:22 \
---publish 5000:5005 \
 --name gitlab \
---shm-size=4g \
+--restart=on-failure \
+--network app \
+--volume $GITLAB_HOME/config:/etc/gitlab \
+--volume $GITLAB_HOME/logs:/var/log/gitlab \
+--volume $GITLAB_HOME/data:/var/opt/gitlab --privileged centos:7 /usr/sbin/init
+
+==========================================
+
+docker run -dti \
+--publish 443:443 \
+--publish 80:80 \
+--publish 22:22 \
+--name gitlab \
 --restart=on-failure \
 --volume $GITLAB_HOME/config:/etc/gitlab \
 --volume $GITLAB_HOME/logs:/var/log/gitlab \
---volume $GITLAB_HOME/data:/var/opt/gitlab --privileged gitlab-ce:1.0 /usr/sbin/init
+--volume $GITLAB_HOME/data:/var/opt/gitlab --privileged debian:10.1
 
 
 --env GITLAB_OMNIBUS_CONFIG="external_url 'http://my.domain.com/'; gitlab_rails['lfs_enabled'] = true;" \
@@ -80,6 +91,8 @@ docker run --rm -ti \
 
 la imagen de gitlab es Ubunto focal
 En el contenedor de gitlab se debe instalar docker y gitlab-runner
+
+En el contenedor de Gitlab, se debe instalar el Gitlab-Runner y Docker
 
 
 
