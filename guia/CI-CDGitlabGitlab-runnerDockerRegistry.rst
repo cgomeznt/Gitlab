@@ -3,6 +3,13 @@
 CI/CD con Gitlab Gitlab-runner y con un Docker Registry
 =============================================
 
+https://github.com/cgomeznt/Docker/blob/master/guia/dockerizargitlabCentos7.rst
+
+https://github.com/cgomeznt/Docker/blob/master/DeployRegistryServer.rst
+
+
+
+
 image: registry:5000/nodejs
 stages:
   - test
