@@ -61,6 +61,8 @@ Crear el .gitlab-ci-yml en el nuevo proyecto::
 	    - shell-01
 	  script:
 	    - touch /tmp/prueba.txt
+	  except: ['master']  #Indica en las ramas en las que no se ejecutara esta actividad 
+	  except: ['develop'] #Indica en las ramas en las que no se ejecutara esta actividad 
 
 Crear la relación confianza desde el contenedor gitlab y el host, para poder mandar a ejecutar comandos docker a través de ssh
 
