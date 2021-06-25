@@ -11,7 +11,9 @@ Entonces tendremos dos (2) contenedores de Docker, uno con Gitlab y Gitlab-Runer
 
 Debemos crear un network de Docker llamada **app** del tipo Bridge y ambos contenedores deben estar en la misma network de Docker llamada **app**
 
-Empecemos con Dockerizar a Gitlab y Gitlab-Runer en un mismo contenedor, que se llamara **gitlab**:
+En el servidor Host debemos tener creardo en el archivo HOSTS los registros de nombre de los contenedores **gitlab** y **registry**
+
+Empecemos con Dockerizar a Gitlab y Gitlab-Runner en un mismo contenedor, que se llamara **gitlab**:
 
 https://github.com/cgomeznt/Docker/blob/master/guia/dockerizargitlabCentos7.rst
 
@@ -60,6 +62,10 @@ Crear el .gitlab-ci-yml en el nuevo proyecto::
 	  script:
 	    - touch /tmp/prueba.txt
 
+Crear la relación confianza desde el contenedor gitlab y el host, para poder mandar a ejecutar comandos docker a través de ssh
+
+docker run -dti --name nodejs -p 3000:3000 registry:5000/e4c400e1
+docker rm -f nodejs
 
 realizar las pruebas
 
