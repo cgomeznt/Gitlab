@@ -10,7 +10,7 @@
 * [Registrando GitLab-Runner](guia/registrargitlabrunner.rst)
 * [CI/CD primeros pasos con un Runner SHELL](guia/integracioncontinuaentender.rst)
 * [CI/CD primeros pasos con un Runner Docker](guia/integracioncontinuaentenderDocker.rst)
-* [CI/CD con Gitlab Gitlab-runner y con un Docker Registry](guia/CI-CDGitlabGitlab-runnerDocker Registry.rst)
+* [CI/CD con Gitlab Gitlab-runner y con un Docker Registry](guia/CI-CDGitlabGitlab-runnerDockerRegistry.rst)
 * [Integración continua con GitLab CI/CD](guia/integracioncontinua.rst)
 
 
