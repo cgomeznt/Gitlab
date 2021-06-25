@@ -28,9 +28,15 @@ Crear un nuevo proyecto dentro de Gitlab.
 
 Crear el Dockerfile en el nuevo proyecto::
 
-	FROM registry:5000/nodejs
+	# FROM registry:5000/nodejs
+	# MAINTAINER Carlos Gomez G cgomeznt@gmail.com
 
-	MAINTAINER Carlos Gomez G cgomeznt@gmail.com
+	FROM node:12-alpine
+	RUN apk add --no-cache python g++ make
+	WORKDIR /app
+	COPY . .
+	RUN yarn install --production
+	CMD ["node", "src/index.js"]
 
 
 
@@ -65,6 +71,8 @@ Crear el .gitlab-ci-yml en el nuevo proyecto::
 	  except: ['develop'] #Indica en las ramas en las que no se ejecutara esta actividad 
 
 Crear la relación confianza desde el contenedor gitlab y el host, para poder mandar a ejecutar comandos docker a través de ssh
+
+Clonar el repositorio en el host
 
 docker run -dti --name nodejs -p 3000:3000 registry:5000/e4c400e1
 docker rm -f nodejs
