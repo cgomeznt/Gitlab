@@ -28,6 +28,8 @@ Glosario
 
 **Docker Registry**: Almacena y le permite distribuir imágenes de Docker. Altamente escalable.
 
+Introducción
+++++++++++++++
 
 Estaremos Dockerizando Gitlab y Gitlab-Runer en un mismo contenedor y tendremos otro contenedor con Docker Registry.
 
