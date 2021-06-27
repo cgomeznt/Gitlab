@@ -87,6 +87,12 @@ Crear el Dockerfile en el nuevo proyecto::
 
 
 Creamos las variables dentro del proyecto de Gitlab en la sesión de Setting -> CI/CD -> Variables
+CONTAINER - nodejs
+CONTAINERPORT - 3000:3000
+HOSTMASTER - 172.18.0.1
+REPO_DEV - registry:5000
+USERMASTER - cgomeznt
+
 
 Crear el .gitlab-ci-yml en el nuevo proyecto::
 
@@ -101,10 +107,10 @@ Crear el .gitlab-ci-yml en el nuevo proyecto::
 	  script:
 	    - echo "write your test here...!!!"
 	    - echo $CONTAINER
-	    - echo "$CI_COMMIT_SHORT_SHA - $REPO_DEV/$CI_COMMIT_SHORT_SHA - $CI_COMMIT_SHORT_SHA"
+	    - echo "$CI_COMMIT_SHORT_SHA - $REGISTRY_HOST/$CI_COMMIT_SHORT_SHA - $CI_COMMIT_SHORT_SHA"
 	    - docker build -t $CI_COMMIT_SHORT_SHA .
-	    - docker image tag $CI_COMMIT_SHORT_SHA $REPO_DEV/$CI_COMMIT_SHORT_SHA
-	    - docker push $REPO_DEV/$CI_COMMIT_SHORT_SHA
+	    - docker image tag $CI_COMMIT_SHORT_SHA $REGISTRY_HOST/$CI_COMMIT_SHORT_SHA
+	    - docker push $REGISTRY_HOST/$CI_COMMIT_SHORT_SHA
 
 	Deploy:
 	  only:
@@ -115,8 +121,8 @@ Crear el .gitlab-ci-yml en el nuevo proyecto::
 	    - shell-01
 	  script:
 	    - touch /tmp/prueba.txt
-	    - ssh $USERMASTER@$HOSTMASTER -p 222 docker rm -f $CONTAINER
-	    - ssh $USERMASTER@$HOSTMASTER -p 222 docker run -dti --name $CONTAINER -p $CONTAINERPORT $REPO_DEV/$CI_COMMIT_SHORT_SHA
+	    - ssh $USER_MASTER@$MASTER_HOST -p 222 docker rm -f $CONTAINER
+	    - ssh $USER_MASTER@$MASTER_HOST -p 222 docker run -dti --name $CONTAINER -p $CONTAINER_PORT $REGISTRY_HOST/$CI_COMMIT_SHORT_SHA
 	  # except: ['master']  #Indica en las ramas en las que no se ejecutara esta actividad 
 	  # except: ['develop'] #Indica en las ramas en las que no se ejecutara esta actividad 
 
