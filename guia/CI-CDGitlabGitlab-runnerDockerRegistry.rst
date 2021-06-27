@@ -31,23 +31,19 @@ Glosario
 Introducción
 ++++++++++++++
 
-Estaremos Dockerizando Gitlab y Gitlab-Runer en un mismo contenedor y tendremos otro contenedor con Docker Registry.
-
-Gitlab-Runner estara integrado con Gitlab, para que ejecute la canalización de los scripts y el resultado sera una imagen en Docker que se almacenara en Docker Registry.
-
-
-
 Daremos una demostración con un código muy simple realizado con **Nodejs**, este código se estará versionado en un proyecto de **Gitlab**, nuestra aplicación en **Nodejs** se ejecutara en un contenedor **Docker**. La idea es cuando el código sufra modificaciones y realicemos un push para subir las modificaciones al proyecto en **Gitlab**, se ejecuten de forma desasistida una canalización de los scripts, que se encargue de construir una nueva imagen de **Docker** con las modificaciones realizadas en el código y esta nueva imagen de **Docker** sera almacenada en el **Docker Registry**, posteriormente en un Servidor se descargara la imagen de **Docker** con el nuevo código y se instancie esta imagen en un contenedor. El contenedor corriendo en el Servidor tendrá la aplicación con las modificaciones realizadas.
 
 
 
-**Hasta aqui**
+**Hasta aquí**
 
-Entonces tendremos dos (2) contenedores de Docker, uno con Gitlab y Gitlab-Runer llamado **gitlab**, y otro con Docker Registry llamado registry.
+Estaremos Dockerizando Gitlab y Gitlab-Runer en un mismo contenedor y tendremos otro contenedor con Docker Registry, es decir, tendremos dos (2) contenedores de Docker, uno con Gitlab y Gitlab-Runer llamado **gitlab**, y otro con Docker Registry llamado registry.
 
-Debemos crear un network de Docker llamada **app** del tipo Bridge y ambos contenedores deben estar en la misma network de Docker llamada **app**
+Gitlab-Runner estará integrado con Gitlab, para que ejecute la canalización de los scripts y el resultado sera una imagen en Docker que se almacenara en Docker Registry.
 
-En el servidor Host debemos tener creardo en el archivo HOSTS los registros de nombre de los contenedores **gitlab** y **registry**
+Se creara un network de Docker llamada **app** del tipo Bridge y ambos contenedores deben estar en la misma network de Docker llamada **app**
+
+En el servidor Host debemos tener creado en el archivo HOSTS los registros de nombre de los contenedores **gitlab** y **registry**, o en su defecto en un DNS.
 
 Empecemos con Dockerizar a Gitlab y Gitlab-Runner en un mismo contenedor, que se llamara **gitlab**:
 
@@ -58,23 +54,39 @@ Crear el contenedor Docker Registry por HTTPS, que se llamara **registry**:
 
 https://github.com/cgomeznt/Docker/blob/master/DeployRegistryServer.rst
 
+Realizar la pruebas de ping entre las IP y DNS de los contenedores y también del Host.
+
+En el contenedor gitlab descargar una imagen y subirla al registry.
+
+Consultar desde el contenedor y desde el Host el registry las imágenes que tiene.
+
+Crear un nuevo proyecto dentro de Gitlab llamado **my*app**.
+
 Crear un Runner del tipo Shell.
 
-Crear un nuevo proyecto dentro de Gitlab.
+Certificar que el runner creado este asociado al Proyecto y running.
+
+En el nuevo proyecto crear dos (2) archivos uno llamado Dockerfile y otro .gitlab-ci.yml.
+
+En el archivo .gitlab-ci.yml. hacemos unas simples pruebas para certificar el funcionamiento del gitlab-runner.
+
+Clonar el repositorio del proyecto Gitlab en el host.
+
+Crear la relación confianza desde el contenedor gitlab y el host, para poder mandar a ejecutar comandos docker a través de ssh.
 
 Crear el Dockerfile en el nuevo proyecto::
 
-	# FROM registry:5000/nodejs
-	# MAINTAINER Carlos Gomez G cgomeznt@gmail.com
-
-	FROM node:12-alpine
+	# FROM node:12-alpine 
+	FROM registry:5000/nodejs
+	MAINTAINER Carlos Gomez G cgomeznt@gmail.com
 	RUN apk add --no-cache python g++ make
 	WORKDIR /app
-	COPY . .
+	COPY app/. .
 	RUN yarn install --production
 	CMD ["node", "src/index.js"]
 
 
+Creamos las variables dentro del proyecto de Gitlab en la sesión de Setting -> CI/CD -> Variables
 
 Crear el .gitlab-ci-yml en el nuevo proyecto::
 
@@ -88,11 +100,11 @@ Crear el .gitlab-ci-yml en el nuevo proyecto::
 	  - shell-01
 	  script:
 	    - echo "write your test here...!!!"
-	    - echo $REGISTRY
-	    - echo "$CI_COMMIT_SHORT_SHA - $REPO_DEV:5000/$CI_COMMIT_SHORT_SHA - $CI_COMMIT_SHORT_SHA"
+	    - echo $CONTAINER
+	    - echo "$CI_COMMIT_SHORT_SHA - $REPO_DEV/$CI_COMMIT_SHORT_SHA - $CI_COMMIT_SHORT_SHA"
 	    - docker build -t $CI_COMMIT_SHORT_SHA .
-	    - docker image tag $CI_COMMIT_SHORT_SHA $REPO_DEV:5000/$CI_COMMIT_SHORT_SHA
-	    - docker push $REPO_DEV:5000/$CI_COMMIT_SHORT_SHA
+	    - docker image tag $CI_COMMIT_SHORT_SHA $REPO_DEV/$CI_COMMIT_SHORT_SHA
+	    - docker push $REPO_DEV/$CI_COMMIT_SHORT_SHA
 
 	Deploy:
 	  only:
@@ -103,16 +115,19 @@ Crear el .gitlab-ci-yml en el nuevo proyecto::
 	    - shell-01
 	  script:
 	    - touch /tmp/prueba.txt
-	  except: ['master']  #Indica en las ramas en las que no se ejecutara esta actividad 
-	  except: ['develop'] #Indica en las ramas en las que no se ejecutara esta actividad 
+	    - ssh $USERMASTER@$HOSTMASTER -p 222 docker rm -f $CONTAINER
+	    - ssh $USERMASTER@$HOSTMASTER -p 222 docker run -dti --name $CONTAINER -p $CONTAINERPORT $REPO_DEV/$CI_COMMIT_SHORT_SHA
+	  # except: ['master']  #Indica en las ramas en las que no se ejecutara esta actividad 
+	  # except: ['develop'] #Indica en las ramas en las que no se ejecutara esta actividad 
 
-Crear la relación confianza desde el contenedor gitlab y el host, para poder mandar a ejecutar comandos docker a través de ssh
-
-Clonar el repositorio en el host
-
-docker run -dti --name nodejs -p 3000:3000 registry:5000/e4c400e1
-docker rm -f nodejs
 
 realizar las pruebas
+modificar el codigo y hacer el push
+se deben activar los pipeline de script 
+se debe crear la imagen
+se debe subir la imagen al registry
+en el servidor remoto debe matar el contenedor actualmente corriendo
+descargar la imagen
+instanciar el contenedor
 
 
