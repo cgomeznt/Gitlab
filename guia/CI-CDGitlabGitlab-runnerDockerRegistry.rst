@@ -278,6 +278,52 @@ Observamos el detalle
 
 .. figure:: ../images/cicd/12.png
 
+Listo ahora nos vamos al Host y verificamos que este el contenedor llamado **nodejs** este corriendo ::
+
+	docker ps
+
+	CONTAINER ID   IMAGE                                  COMMAND                  CREATED         STATUS         PORTS                                                                                                         NAMES
+	a35c397af34f   registry.dominio.local:4443/48e66f49   "docker-entrypoint.s…"   4 minutes ago   Up 4 minutes   0.0.0.0:3000->3000/tcp, :::3000->3000/tcp                                                                     nodejs
+	3ee06f605183   registry:2                             "/entrypoint.sh /etc…"   21 hours ago    Up 10 hours    0.0.0.0:4443->4443/tcp, :::4443->4443/tcp, 5000/tcp                                                           registry.dominio.local
+	1477efa8cd73   centos:7                               "/usr/sbin/init"         24 hours ago    Up 10 hours    0.0.0.0:22->22/tcp, :::22->22/tcp, 0.0.0.0:80->80/tcp, :::80->80/tcp, 0.0.0.0:443->443/tcp, :::443->443/tcp   gitlab.dominio.local
+
+Abrimos un navegado y colocamos la dirección IP del Host con el puerto 3000:
+
+
+.. figure:: ../images/cicd/13.png
+
+Vemos como el aplicativo esta operativo
+
+.. figure:: ../images/cicd/14.png
+
+Ahora vamos a modificar nuestro codigo de **nodejs** hacemos el push y veremos que simple es la CI/CD::
+
+	vi app/src/static/js/app.js
+	# Editamos esta linea
+	#<p className="text-center">No items yet! Add one above!</p>
+	<p className="text-center">Aun no tienes componentes..!!! Agregue uno arriba...!</p>
+
+
+Hacemos el push
+
+	git add * && git commit -m "My Commit" && git push
+
+Y listo, verifica el CI/CD y luego verifica la URL.
+
+.. figure:: ../images/cicd/15.png
+
+Vemos el contenedor cual es su imagen de origen y vemos como coincide con el commit
+
+	docker ps
+	CONTAINER ID   IMAGE                                  COMMAND                  CREATED         STATUS         PORTS                                                                                                         NAMES
+	6f2c041c122f   registry.dominio.local:4443/2d366d94   "docker-entrypoint.s…"   3 minutes ago   Up 2 minutes   0.0.0.0:3000->3000/tcp, :::3000->3000/tcp                                                                     nodejs
+
+Vemos nuestras modificaciones 
+
+.. figure:: ../images/cicd/16.png
+
+
+
 realizar las pruebas
 modificar el codigo y hacer el push
 se deben activar los pipeline de script 
