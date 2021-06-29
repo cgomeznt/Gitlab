@@ -69,7 +69,7 @@ Ubicar los certificados creados para el **registry.dominio.local**, debemos crea
 	docker exec -ti gitlab.dominio.local bash
 	mkdir -p /etc/docker/certs.d/registry.dominio.local\:4443/
 
-Y dentro de esa carpeta debemos copiar el certificado del servidor y la CA que lo firmo, nos salimos del contenedor::
+Y dentro de esa carpeta debemos copiar el certificado del servidor y la CA que lo firmo.::
 
 	docker cp certs/registry.crt gitlab.dominio.local:/etc/docker/certs.d/registry.dominio.local\:4443/
 	docker cp certs/rootCA.crt gitlab.dominio.local:/etc/docker/certs.d/registry.dominio.local\:4443/
@@ -128,7 +128,7 @@ Dentro del contenedor **gitlab.dominio.local**, crear un Runner del tipo Shell.:
 	Runner registered successfully. Feel free to start it, but if it's running already the config should be automatically reloaded! 
 
 
-Certificar que el runner este creado y este asociado al Proyecto y por supuesto que este operativo.
+Certificar que el runner este creado.
 
 .. figure:: ../images/cicd/03.png
 
@@ -157,7 +157,7 @@ En el nuevo proyecto crear dos (2) archivos uno llamado Dockerfile y otro .gitla
 
 **NOTA** Se da por entendido que ya se realizaron pruebas para certificar el funcionamiento del gitlab-runner.
 
-Crear la relación confianza desde el contenedor gitlab.domio.local hacia el host, para poder mandar a ejecutar comandos docker a través de ssh. ver este link.
+Crear la relación confianza desde el contenedor **gitlab.domio.local** hacia el host, para poder mandar a ejecutar comandos docker a través de ssh. ver este link.
 
 https://github.com/cgomeznt/SSH/blob/master/guia/ssh_sin_password.rst
 
