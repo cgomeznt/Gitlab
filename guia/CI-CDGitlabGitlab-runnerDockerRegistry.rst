@@ -270,6 +270,14 @@ Y este es el detalle que podemos ir viendo mientras se ejecuta el pipeline.
 
 .. figure:: ../images/cicd/10.png
 
+Vemos como se ejecuta el otro pipeline
+
+.. figure:: ../images/cicd/11.png
+
+Observamos el detalle
+
+.. figure:: ../images/cicd/12.png
+
 realizar las pruebas
 modificar el codigo y hacer el push
 se deben activar los pipeline de script 
