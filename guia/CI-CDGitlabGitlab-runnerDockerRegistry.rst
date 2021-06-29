@@ -87,16 +87,41 @@ Consultar desde el Host el registry las imágenes que tiene.::
 En el contenedor gitlab descargar una imagen y subirla al registry.::
 
 	docker exec -ti gitlab.dominio.local bash
-	docker run hello-world
+
+	docker pull node:12-alpine 
+		12-alpine: Pulling from library/node
+		ddad3d7c1e96: Pull complete 
+		3a8370f05d5d: Pull complete 
+		71a8563b7fea: Pull complete 
+		119c7e14957d: Pull complete 
+		Digest: sha256:be24b4fe27c92231c051a06e717b67e2a4dfc70d8edb0281285762292b854c03
+		Status: Downloaded newer image for node:12-alpine
+		docker.io/library/node:12-alpine
+
 	docker images
-	docker tag hello-world registry.dominio.local:4443/myhello-world
-	docker images
-	docker push registry.dominio.local:4443/myhello-world
+		REPOSITORY                                  TAG         IMAGE ID       CREATED        SIZE
+		node                                        12-alpine   deeae3752431   2 months ago   88.9MB
+
+	docker tag node:12-alpine registry.dominio.local:4443/nodejs
+
+	# docker images
+	REPOSITORY                                  TAG         IMAGE ID       CREATED        SIZE
+	registry.dominio.local:4443/nodejs          latest      deeae3752431   2 months ago   88.9MB
+	node                                        12-alpine   deeae3752431   2 months ago   88.9MB
+
+	docker push registry.dominio.local:4443/nodejs
+		Using default tag: latest
+		The push refers to repository [registry.dominio.local:4443/nodejs]
+		c29549fbad68: Pushed 
+		efc48a5f6f42: Pushed 
+		33816ea3af7a: Pushed 
+		9a5d14f9f550: Pushed 
+		latest: digest: sha256:d714e8b527d784cd12b3dfc022f771c7f3531acb57f483be2c8f0997924a37df size: 1158
 
 Volvemos a consultar las imágenes que tenga registry.dominio.local, lo podemos hacer desde el host o desde el contenedor::
 
 	curl -k https://registry.dominio.local:4443/v2/_catalog
-	{"repositories":["myhello-world"]}
+	{"repositories":["nodejs"]}
 
 
 Crear un nuevo proyecto dentro de Gitlab llamado **my*app**.
@@ -157,7 +182,7 @@ En el nuevo proyecto crear dos (2) archivos uno llamado Dockerfile y otro .gitla
 
 **NOTA** Se da por entendido que ya se realizaron pruebas para certificar el funcionamiento del gitlab-runner.
 
-Crear la relación confianza desde el contenedor **gitlab.domio.local** hacia el host, para poder mandar a ejecutar comandos docker a través de ssh. ver este link.
+Crear la relación confianza desde el contenedor **gitlab.domio.local**, con el usuario **gitlab-runner** hacia el host, para poder mandar a ejecutar comandos docker a través de ssh. ver este link.
 
 https://github.com/cgomeznt/SSH/blob/master/guia/ssh_sin_password.rst
 
@@ -220,6 +245,29 @@ Crear el .gitlab-ci-yml en la raíz del proyecto::
 	  # except: ['master']  #Indica en las ramas en las que no se ejecutara esta actividad 
 	  # except: ['develop'] #Indica en las ramas en las que no se ejecutara esta actividad 
 
+
+Agregamos todos los cambios, hacemos el commit y el push::
+
+	git add * && git commit -m "My Commit" && git push
+	git add .gitlab-ci.yml && git commit -m "My Commit" && git push
+
+Nos vamos al proyecto y en CI/CD veremos que se activo un pipeline gracias al Runner Shell.
+
+Vemos como primero esta en **Pendding**
+
+.. figure:: ../images/cicd/07.png
+
+Vemos como pasa a **Running**
+
+.. figure:: ../images/cicd/08.png
+
+Vemos dentro de **Running**  todos los pipeline
+
+.. figure:: ../images/cicd/09.png
+
+Y este es el detalle que podemos ir viendo mientras se ejecuta el pipeline.
+
+.. figure:: ../images/cicd/10.png
 
 realizar las pruebas
 modificar el codigo y hacer el push
