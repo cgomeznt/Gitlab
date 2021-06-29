@@ -127,7 +127,7 @@ Volvemos a consultar las imágenes que tenga registry.dominio.local, lo podemos 
 	{"repositories":["nodejs"]}
 
 
-Crear un nuevo proyecto dentro de Gitlab llamado **my*app**.
+Crear un nuevo proyecto dentro de Gitlab llamado **my_app**.
 
 .. figure:: ../images/cicd/01.png
 
@@ -176,7 +176,7 @@ En el host nos vamos a una carpeta de trabajos y clonamos el repositorio::
 	Clonando en 'my-app'...
 	warning: Pareces haber clonado un repositorio sin contenido.
 
-Dentro del proyecto clonado copiamos nuestro codigo en **Nodejs**, este proyecto esta aquí en la carpeta codigo::
+Dentro del proyecto clonado copiamos nuestro codigo en **Nodejs**, este proyecto esta aquí en la carpeta codigo .. _Wikipedia:https://github.com/cgomeznt/Gitlab/blob/master/codigo/app.zip ::
 
 	unzip app.zip
 	mv app my-app/
