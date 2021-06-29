@@ -59,7 +59,7 @@ Desde el Host hacia los contenedores::
 	ping -c2 gitlab.dominio.local
 	ping -c2 registry.dominio.local
 
-Entre los contenedores
+Entre los contenedores::
 
 	docker exec -ti gitlab.dominio.local ping -c2 registry.dominio.local
 	docker exec -ti registry.dominio.local ping -c2 gitlab.dominio.local
