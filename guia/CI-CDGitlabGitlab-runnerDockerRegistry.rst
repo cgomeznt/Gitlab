@@ -50,7 +50,7 @@ Empecemos con Dockerizar a Gitlab y Gitlab-Runner en un mismo contenedor, que se
 https://github.com/cgomeznt/Docker/blob/master/guia/dockerizargitlabCentos7.rst
 
 
-Crear el contenedor Docker Registry por HTTPS, que se llamara **registry**:
+Crear el contenedor Docker Registry por HTTPS, que se llamara **registry**, busca esta guía **Correr un Registry accesible desde otros servidores**:
 
 https://github.com/cgomeznt/Docker/blob/master/DeployRegistryServer.rst
 
