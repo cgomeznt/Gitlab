@@ -194,9 +194,10 @@ Creamos las variables dentro del proyecto de Gitlab en la sesión de Setting -> 
 
 * HOST_MASTER - 172.18.0.1	# Esta es la dirección IP del adaptador Docker del Host.
 
-* REPO_DEV - registry.dominio.local:4443	# Este es el nombre DNS y puerto del registry.
+* REGISTRY_HOST - registry.dominio.local:4443	# Este es el nombre DNS y puerto del registry.
 
 * USER_MASTER - cgomeznt	# Este es el usuario con privilegios desde el contenedor gitlab.dominio.local hacer ssh en el Host.
+
 
 .. figure:: ../images/cicd/06.png
 
@@ -253,15 +254,15 @@ Agregamos todos los cambios, hacemos el commit y el push::
 
 Nos vamos al proyecto y en CI/CD veremos que se activo un pipeline gracias al Runner Shell.
 
-Vemos como primero esta en **Pendding**
+Vemos como primero esta en **pending**
 
 .. figure:: ../images/cicd/07.png
 
-Vemos como pasa a **Running**
+Vemos como pasa a **running**
 
 .. figure:: ../images/cicd/08.png
 
-Vemos dentro de **Running**  todos los pipeline
+Vemos dentro de **running**  todos los pipeline
 
 .. figure:: ../images/cicd/09.png
 
