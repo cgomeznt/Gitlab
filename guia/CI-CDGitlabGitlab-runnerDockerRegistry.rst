@@ -176,7 +176,7 @@ En el host nos vamos a una carpeta de trabajos y clonamos el repositorio::
 	Clonando en 'my-app'...
 	warning: Pareces haber clonado un repositorio sin contenido.
 
-Dentro del proyecto clonado copiamos nuestro codigo en **Nodejs**, este proyecto esta aquí en la carpeta codigo .. _Wikipedia:https://github.com/cgomeznt/Gitlab/blob/master/codigo/app.zip ::
+Dentro del proyecto clonado copiamos nuestro codigo en **Nodejs**, este proyecto esta aquí en la carpeta `codigo <https://github.com/cgomeznt/Gitlab/blob/master/codigo/app.zip>`_. ::
 
 	unzip app.zip
 	mv app my-app/
