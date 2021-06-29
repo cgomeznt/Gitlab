@@ -304,7 +304,7 @@ Ahora vamos a modificar nuestro codigo de **nodejs** hacemos el push y veremos q
 	<p className="text-center">Aun no tienes componentes..!!! Agregue uno arriba...!</p>
 
 
-Hacemos el push
+Hacemos el push.::
 
 	git add * && git commit -m "My Commit" && git push
 
@@ -312,7 +312,7 @@ Y listo, verifica el CI/CD y luego verifica la URL.
 
 .. figure:: ../images/cicd/15.png
 
-Vemos el contenedor cual es su imagen de origen y vemos como coincide con el commit
+Vemos el contenedor cual es su imagen de origen y vemos como coincide con el commit::
 
 	docker ps
 	CONTAINER ID   IMAGE                                  COMMAND                  CREATED         STATUS         PORTS                                                                                                         NAMES
