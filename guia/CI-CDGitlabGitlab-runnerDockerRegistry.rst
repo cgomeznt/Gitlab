@@ -43,7 +43,10 @@ Se creara un network de Docker llamada **app** del tipo Bridge y ambos contenedo
 
 En el servidor Host debemos tener creado en el archivo HOSTS los registros de nombre de los contenedores **gitlab.dominio.local** y **registry.dominio.local**, o en su defecto en un DNS.
 
-Empecemos con Dockerizar a Gitlab y Gitlab-Runner en un mismo contenedor, que se llamara **gitlab.dominio.local**:
+Empecemos
++++++++++++++
+
+Dockerizar a Gitlab y Gitlab-Runner en un mismo contenedor, que se llamara **gitlab.dominio.local**:
 
 https://github.com/cgomeznt/Docker/blob/master/guia/dockerizargitlabCentos7.rst
 
@@ -324,3 +327,10 @@ Vemos nuestras modificaciones
 
 
 
+
+Tips
+
+
+hacer el curl -k https://registry.dominio.local:4443/v2/_catalog
+
+docker images dentro de gitlab.dominio.local
