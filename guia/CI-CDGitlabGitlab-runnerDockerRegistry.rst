@@ -324,13 +324,3 @@ Vemos nuestras modificaciones
 
 
 
-realizar las pruebas
-modificar el codigo y hacer el push
-se deben activar los pipeline de script 
-se debe crear la imagen
-se debe subir la imagen al registry
-en el servidor remoto debe matar el contenedor actualmente corriendo
-descargar la imagen
-instanciar el contenedor
-
-
