@@ -4,6 +4,7 @@
 * [Instalar GitLab Enterprise Edition](guia/instalargitlab.rst)
 * [Configuracion Inicial de GitLab Enterprise Edition](guia/configuracioninicial.rst)
 * [Personalizar GitLab Enterprise Edition](guia/personalizar.rst)
+* [Configure LDAP](guia/Gitlab_LDAP.rst)
 * [Instalar GitLab Docker images](guia/instalargitlabdocker.rst)
 * [Instalar GitLab-Runner Docker images](guia/instalargitlabrunnerdocker.rst)
 * [Instalar el Gitlab Container Registry Imagen](guia/instalargitlabcontainerregistry.rst)
