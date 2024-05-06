@@ -13,6 +13,7 @@
 * [CI/CD primeros pasos con un Runner Docker](guia/integracioncontinuaentenderDocker.rst)
 * [CI/CD con Gitlab Gitlab-runner y con un Docker Registry](guia/CI-CDGitlabGitlab-runnerDockerRegistry.rst)
 * [Integración continua con GitLab CI/CD](guia/integracioncontinua.rst)
+* [Multi-Stage con Gitlab CI/CD](guia/Multi-Stage_with_Gitlab.rst)
 * [Respaldo y Restauración](guia/Backup_Restore_GitLab.rst)
 
 
