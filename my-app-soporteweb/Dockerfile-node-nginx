@@ -1,0 +1,16 @@
+### STAGE 1: Build ###
+FROM node AS build
+WORKDIR  /usr/src/app
+COPY package*.json ./
+
+#RUN npm install
+RUN npm install -g @angular/cli
+
+RUN npm install
+COPY . .
+RUN ng build
+
+### STAGE 2: Run ###
+FROM nginx:1.17.1-alpine
+COPY --from=build /usr/src/app/dist/* /usr/share/nginx/html/angular/
+#CMD ["ng", "serve", "--host=0.0.0.0", "--disable-host-check"]

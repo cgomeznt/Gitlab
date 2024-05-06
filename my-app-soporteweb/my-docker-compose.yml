@@ -1,0 +1,8 @@
+version: '3'
+services:
+  mi-primer-deploy:
+    image: ${CI_PROJECT_NAME}/${CI_PIPELINE_ID}:latest
+    container_name: my-first-deploy
+    ports:
+      - 8081:80
+    restart: always
