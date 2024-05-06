@@ -1,0 +1,39 @@
+image: docker:stable
+
+services:
+  - name: docker:dind
+    alias: 10.134.0.89
+    entrypoint: ["dockerd-entrypoint.sh", "--tls=false"]
+
+variables:
+    DOCKER_HOST: tcp://10.134.0.89:2375/
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+
+before_script:
+  - docker info
+
+
+docker-build:
+  script:
+    - docker build -t ${CI_PROJECT_NAME}/${CI_PIPELINE_ID}:latest .
+  stage: build
+  tags: 
+    - docker
+  only:
+    changes:
+    - deploy.txt
+
+deploy-docker-compose:
+  # Official docker image.
+  image: docker/compose
+  services:
+    - docker:dind
+  script:
+    - docker-compose --file my-docker-compose.yml up -d
+  stage: deploy
+  tags:
+    - docker
+  only:
+    changes:
+    - deploy.txt
