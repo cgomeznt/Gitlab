@@ -16,6 +16,8 @@
 * [Multi-Stage con Gitlab CI/CD](guia/Multi-Stage_with_Gitlab.rst)
 * [Upgrade de Gitlab](guia/upgradeGitlab.rst)
 * [Respaldo y Restauración](guia/Backup_Restore_GitLab.rst)
+* [Actualización de GitLab-CE](guia/Actualizar_Gitlab_Gitlab_Runner.rst)
+
 
 
 
