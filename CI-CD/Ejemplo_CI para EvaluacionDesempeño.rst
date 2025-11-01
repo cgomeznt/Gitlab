@@ -1,16 +1,16 @@
 
-El servidor de Gitlab 10.134.0.29 - lcsdevapptdgitlab debe poder llegar a los servidores de EvaluacionDesempeño por SSH puerto 22.
+El servidor de Gitlab 10.10.10.21 - servergitlab debe poder llegar a los servidores de ServerTest por SSH puerto 22.
 
-En los servidores de EvaluacionDesempeño debe existir un usuario llamado::
+En los servidores de ServerTest debe existir un usuario llamado::
 	
 	gitlab-runner
 
-Se debe crear una relacion de confianza entre el servidor Gitlab y los servidores de EvaluacionDesempeño por medio del usuario gitlab-runner
+Se debe crear una relacion de confianza entre el servidor Gitlab y los servidores de ServerTest por medio del usuario gitlab-runner
 y debe ser sudoers::
 
 	useradd -c "gitlab-runner - Usuario utilizado en Gitlab para el CI-CD" -d /home/gitlab-runner gitlab-runner -s /bin/bash -G soinfra
 	passwd gitlab-runner
-	Cr3d1c4rd
+	r00tme
 
 
 Agregar o descomentar la siguientes línea en el archivo /etc/ssh/sshd_config::
@@ -26,57 +26,49 @@ Preparar el directorio .ssh::
 
 Reiniciar el servicio de sshd::
 
-	[root@lcsqaappevaluaciond .ssh]# systemctl restart sshd
+	[root@TuServerTest .ssh]# systemctl restart sshd
 
 
-En el servidor de Gitlab, se debe realizar la copia del id_rsa.pub a los servidores de EvaluacionDesempeño:
+En el servidor de Gitlab, se debe realizar la copia del id_rsa.pub a los servidores de ServerTest:
 
 Entramos al servidor de Gitlab y nos vamos al directorio .ssh del usuario gitlab-runner::
 
-	[root@lcsdevapptdgitlab]# su - gitlab-runner
+	[root@servergitlab]# su - gitlab-runner
 	Last login: Mon May 23 12:29:03 -04 2022
-	[gitlab-runner@lcsdevapptdgitlab ~]$ cd .ssh/
+	[gitlab-runner@servergitlab ~]$ cd .ssh/
 	
-	[gitlab-runner@lcsdevapptdgitlab .ssh]$ ls -l
+	[gitlab-runner@servergitlab .ssh]$ ls -l
 	total 12
 	-rw------- 1 gitlab-runner gitlab-runner 3247 Jan 28  2020 id_rsa
 	-rw-r--r-- 1 gitlab-runner gitlab-runner  757 Jan 28  2020 id_rsa.pub
 	-rw-r--r-- 1 gitlab-runner gitlab-runner 3645 May  4 14:34 known_hosts
 	
-Copiamos el contenido del id_rsa.pub a cada uno de los servidores de EvaluacionDesempeño::
+Copiamos el contenido del id_rsa.pub a cada uno de los servidores de ServerTest::
 
-	[root@lcsdevapptdgitlab]# cat id_rsa.pub |  ssh gitlab-runner@10.134.4.108 'cat > .ssh/authorized_keys'
+	[root@servergitlab]# cat id_rsa.pub |  ssh gitlab-runner@10.10.10.222 'cat > .ssh/authorized_keys'
 
-Nos vamos a los servidores de EvaluacionDesempeño y en cada uno de ellos no vamos a la ruta /home/gitlab-runner/.ssh/ y cambiamos los permisos a 400 del archivo authorized_keys::
+Nos vamos a los servidores de ServerTest y en cada uno de ellos no vamos a la ruta /home/gitlab-runner/.ssh/ y cambiamos los permisos a 400 del archivo authorized_keys::
 
-	[root@lcsqaappevaluaciond gitlab-runner]# cd /home/gitlab-runner/.ssh/
-	[root@lcsqaappevaluaciond .ssh]# chmod 400 authorized_keys
+	[root@TuServerTest gitlab-runner]# cd /home/gitlab-runner/.ssh/
+	[root@TuServerTest .ssh]# chmod 400 authorized_keys
 	
-	[root@lcsqaappevaluaciond .ssh]# ls -l
+	[root@TuServerTest .ssh]# ls -l
 	total 4
 	-r-------- 1 gitlab-runner gitlab-runner 757 May 23 15:32 authorized_keys
-	[root@lcsqaappevaluaciond .ssh]#
+	[root@TuServerTest .ssh]#
 
 Hacemos inicio de sesión con gitlab-runner::
 
 	# su - gitlab-runner
 	
-Luego certificamos desde el Gitlab que se pueda hacer ssh gitlab-runner@10.134.4.108 a cada uno de los servidores de EvaluacionDesempeño e ingrese sin pedir clave::
+Luego certificamos desde el Gitlab que se pueda hacer ssh gitlab-runner@10.10.10.222 a cada uno de los servidores de ServerTest e ingrese sin pedir clave::
 
-	[gitlab-runner@lcsdevapptdgitlab .ssh]$ ssh gitlab-runner@10.134.4.108
-	Last login: Mon May 23 15:38:45 2022 from gitlab.credicard.com.ve
+	[gitlab-runner@servergitlab .ssh]$ ssh gitlab-runner@10.10.10.222
+	Last login: Mon May 23 15:38:45 2022 from gitlab.local.com.ve
 
-	######################################################
-	#     _____              _ _  _____              _   #
-	#    / ____|            | (_)/ ____|            | |  #
-	#   | |     _ __ ___  __| |_| |     __ _ _ __ __| |  #
-	#   | |    | '__/ _ \/ _` | | |    / _` | '__/ _` |  #
-	#   | |____| | |  __/ (_| | | |___| (_| | | | (_| |  #
-	#    \_____|_|  \___|\__,_|_|\_____\__,_|_|  \__,_|  #
-	#                                                    #
-	######################################################
 
-	[gitlab-runner@lcsqaappevaluaciond ~]$
+
+	[gitlab-runner@TuServerTest ~]$
 
 
 
@@ -90,7 +82,7 @@ stages:
 deployDev:
   stage: deployDev
   script: 
-        - ssh -t -t gitlab-runner@10.132.7.555 "sudo df -h > espacioDEV.txt"
+        - ssh -t -t gitlab-runner@10.10.10.555 "sudo df -h > espacioDEV.txt"
   tags:
         - shell
   only:
@@ -108,13 +100,13 @@ deployQa:
 deployPro:
   stage: deployPro
   script:
-        - scp -r ./Autogestion.war  gitlab-runner@10.132.7.772:/home/gitlab-runner
-        - ssh -t -t gitlab-runner@10.132.7.772 "sudo chown tomcat.tomcat /home/gitlab-runner/Autogestion.war"
-        - ssh -t -t gitlab-runner@10.132.7.772 "sudo systemctl stop tomcat.service"
-        - ssh -t -t gitlab-runner@10.132.7.772 "sudo cp -dp /home/gitlab-runner/Autogestion.war /opt/tomcat/webapps/"
-        - ssh -t -t gitlab-runner@10.132.7.772 "sudo rm -rf /home/gitlab-runner/Autogestion.war"
-        - ssh -t -t gitlab-runner@10.132.7.772 "sudo rm -rf /opt/tomcat/work"
-        - ssh -t -t gitlab-runner@10.132.7.772 "sudo systemctl start tomcat.service"
+        - scp -r ./Autogestion.war  gitlab-runner@10.10.10.444:/home/gitlab-runner
+        - ssh -t -t gitlab-runner@10.10.10.444 "sudo chown tomcat.tomcat /home/gitlab-runner/Autogestion.war"
+        - ssh -t -t gitlab-runner@10.10.10.444 "sudo systemctl stop tomcat.service"
+        - ssh -t -t gitlab-runner@10.10.10.444 "sudo cp -dp /home/gitlab-runner/Autogestion.war /opt/tomcat/webapps/"
+        - ssh -t -t gitlab-runner@10.10.10.444 "sudo rm -rf /home/gitlab-runner/Autogestion.war"
+        - ssh -t -t gitlab-runner@10.10.10.444 "sudo rm -rf /opt/tomcat/work"
+        - ssh -t -t gitlab-runner@10.10.10.444 "sudo systemctl start tomcat.service"
   tags:
         - shell
   only:
@@ -146,5 +138,6 @@ Tecnica 2::
 	Luego en  "Settings -> CI / CD -> General pipelines".
 
 	Colocar  la opcion"git clone"
+
 
 	Git shallow clone colocarlo en 0
